@@ -1,0 +1,23 @@
+{
+  "name": "school-management-system",
+  "version": "1.0.0",
+  "description": "Library Management System + Hostel Rooms Management + Online Classes Tutoring Scripts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rupeshchiluka001/school-management-system.git"
+  },
+  "keywords": [
+    "library",
+    "books"
+  ],
+  "author": "Rupesh Chiluka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rupeshchiluka001/school-management-system/issues"
+  },
+  "homepage": "https://github.com/rupeshchiluka001/school-management-system#readme"
+}
