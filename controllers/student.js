@@ -5,3 +5,7 @@ exports.getUserDashboard = async(req, res) => {
     let page = req.params.page || 1;
     const studentId = req.student._id;
 }
+
+exports.getUserProfile = (req, res) => {
+    
+}
