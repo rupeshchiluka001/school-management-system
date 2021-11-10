@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+
+html {
+    height: 100%;
+    font-family: 'Mochiy Pop P One', sans-serif;
+}
+
+body {
+    background: #E0E0E0;
+}
