@@ -1,7 +1,7 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const connection = require('./database');
-const student = connection.models.student;
+const User = connection.models.User;
 const { validatePassword } = require('../lib/passwordUtils');
 
 const customFields = {
@@ -9,25 +9,22 @@ const customFields = {
     passwordField: 'pwd'
 };
 
-const verifyCallback = (username, password, done) => {
-    student.findOne({username: username})
-            .then((user) => {
-                if (!user) {
-                    return done(null, false);
-                }
-                
-                const isValid = validatePassword(password);
+const verifyCallback = ((username, password, done) => {
+    User.findOne({username: username})
+        .then((user) => {
+            if (!user) return done(null, false);
 
-                if (isValid) {
-                    return done(null, student);
-                } else {
-                    return done(null, false);
-                }
-            })
-            .catch((err) => {
-                done(err);
-            })
-};
+            const isValid = validatePassword(password);
+
+            if (isValid) {
+                return done(null, user);
+            }
+            else {
+                return done(null, false);
+            }
+        })
+        .catch(err => done(err))
+});
 
 const strategy = new localStrategy(customFields, verifyCallback);
 
@@ -38,9 +35,9 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((userId, done) => {
-    student.findById(userId)
-            .then((user) => {
-                done(null, user);
-            })
-            .catch(err => done(err));
+    User.findById(userId)
+        .then((user) => {
+            done(null, user);
+        })
+        .catch(err => done(err));
 });

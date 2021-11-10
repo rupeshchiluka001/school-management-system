@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
 
-const ProfessorSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-    },
-    age: {
-        type: Number,
     },
     gender: {
         type: String,
@@ -15,24 +12,24 @@ const ProfessorSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    SSN: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,
     },
-    password: {
+    hash: {
         type: String,
-        required: true,
+    },
+    salt: {
+        type: String,
     },
     joined: {
         type: Date,
         default: Date.now(),
     },
+    role: {
+        type: String,
+        required: true,
+    }
 });
 
-const Professor = mongoose.model("Professor", ProfessorSchema);
-
-module.exports = Professor;
+module.exports = mongoose.model("User", UserSchema);

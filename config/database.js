@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const connection = mongoose.createConnection(process.env.DB_STRING, {
+module.exports = mongoose.createConnection(`mongodb://localhost:27017/sms`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
-module.exports = connection;

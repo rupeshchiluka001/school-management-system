@@ -27,7 +27,7 @@ const IssueSchema = new mongoose.Schema({
     onUser: {
         type: String,
         required: true,
-        enum: ['Student', 'Professor', 'Librarain'],
+        enum: ['Student', 'Professor', 'Librarian'],
     },
     issueDate : {
         type: Date,
@@ -42,6 +42,4 @@ const IssueSchema = new mongoose.Schema({
     }
 });
 
-const Issue = mongoose.model("Issue", IssueSchema);
-
-module.exports = Issue;
+module.exports = mongoose.model("Issue", IssueSchema);
