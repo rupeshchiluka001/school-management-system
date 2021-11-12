@@ -3,15 +3,24 @@ const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
-var routes = require('./routes');
-var connection = require('./config/database');
+const path = require('path');
+const routes = require('./routes');
+const libraryRoutes = require('./routes/library');
+const connection = require('./config/database');
+const cors = require('cors');
 
 require('dotenv').config;
 
 const app = express();
 
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+app.use(express.static(__dirname+'/public'));
 
 const dbOptions = {
     useNewUrlParser: true,
@@ -41,12 +50,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes after other middleware, and before error handler
-app.use(routes)
+app.use('/api', routes)
+app.use('/api/library', libraryRoutes);
 
 app.get('/', (req, res) => {
-    res.send('<h1>Hello World!</h1>');
+    res.sendFile(path.join(__dirname+'/public/index.html'))
 });
 
 app.listen(3000, () => {
-    console.log("Server is running at port 3000...");
+    console.log("Server is running at http://localhost:3000...");
 });

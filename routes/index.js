@@ -1,4 +1,4 @@
-const router = require('express').Router;
+const router = require('express').Router();
 const passport = require('passport');
 const { genPassword } = require('../lib/passwordUtils');
 const connection = require('../config/database');
@@ -27,9 +27,9 @@ router.post('/register', (req, res, next) => {
         })
 });
 
-router.get('logout', (req, res, next) => {
+router.get('/logout', (req, res, next) => {
     req.logout();
-    res.redirect('/');
+    // res.redirect('/');
 });
 
 module.exports = router;

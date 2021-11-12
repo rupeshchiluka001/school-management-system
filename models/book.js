@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
+const connection = require('../config/database');
 
 const BookSchema = new mongoose.Schema({
     title: {
+        type: String,
+        required: true,
+    },
+    ISN: {
         type: String,
         required: true,
     },
@@ -21,4 +26,4 @@ const BookSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Book", BookSchema);
+module.exports = connection.model("Book", BookSchema);

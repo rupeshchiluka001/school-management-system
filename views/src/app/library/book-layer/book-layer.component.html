@@ -1,0 +1,31 @@
+<div>
+    <select name="filter" id="filter"
+    [(ngModel)]='filter'>
+        <option value="">Search Filter</option>
+        <option value="title">Book Title</option>
+        <option value="author">Book Author</option>
+        <option value="category">Book Field</option>
+    </select>
+</div>
+<div id="search-box">
+    <div id="inner-search-div">
+        <input type="text" name="search" id="search"
+            [(ngModel)]='searchValue'
+            (keydown.enter)="searchBooks()"
+            placeholder="Search a query ...">
+        <span
+            (click)="searchBooks()" class="icon material-icons">search</span>
+    </div>
+</div>
+
+<br>
+
+<app-book 
+*ngFor="let book of books"
+    [title]='book.title'
+    [author]='book.author'
+    [field]='book.category'
+    [description]='book.description'
+    [stock]='book.stock'
+>
+</app-book>

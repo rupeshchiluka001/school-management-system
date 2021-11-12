@@ -1,10 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { BookLayerComponent } from './library/book-layer/book-layer.component';
+import { LibraryHomeComponent } from './library/library-home/library-home.component';
+import { NewBookFormComponent } from './library/new-book-form/new-book-form.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'library', component: LibraryHomeComponent,
+    children: [
+      { path: 'add-new-book', component: NewBookFormComponent },
+      { path: 'books', component: BookLayerComponent },
+      { path: '**', redirectTo: 'books' },
+    ]  
+  },
+  // { path: 'library/home', component: LibraryHomeComponent },
+  // { path: 'library/add-new-book', component: NewBookFormComponent },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '**', redirectTo: 'home' },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

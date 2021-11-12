@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const connection = require('../config/database');
 
 const IssueSchema = new mongoose.Schema({
     bookInfo: {
@@ -42,4 +43,4 @@ const IssueSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("Issue", IssueSchema);
+module.exports = connection.model("Issue", IssueSchema);
