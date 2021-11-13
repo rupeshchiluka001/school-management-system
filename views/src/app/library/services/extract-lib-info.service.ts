@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, map } from 'rxjs';
 import { Book } from 'src/app/models/book';
+import { BookQuery } from 'src/app/models/book-query';
 
 @Injectable(
   // {
@@ -26,7 +27,7 @@ export class ExtractLibInfoService {
     return this.http.post<Book>(this.postNewBookUrl, bookData);
   }
 
-  getBooks(queryParams: String): Observable<Book[]> {
-    return this.http.get<Book[]>(this.getBooksUrl+queryParams);
+  getBooks(queryParams: String): Observable<BookQuery> {
+    return this.http.get<BookQuery>(this.getBooksUrl+queryParams);
   }
 }

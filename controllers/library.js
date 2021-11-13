@@ -23,15 +23,15 @@ exports.getBooks = async(req, res, next) => {
         const count = await Book.find(searchObj).countDocuments();
         console.log(req.user);
 
-        // res.send({
-        //     books: books,
-        //     current: page,
-        //     pages: Math.ceil(count/PER_PAGE),
-        //     filter: filter,
-        //     value: value,
-        //     user: req.user,
-        // });
-        res.send(books);
+        res.send({
+            books: books,
+            current: page,
+            pages: Math.ceil(count/PER_PAGE),
+            filter: filter,
+            value: value,
+            user: req.user,
+        });
+        // res.send(books);
     } catch (err) {
         console.log(err);
         console.log(500);
