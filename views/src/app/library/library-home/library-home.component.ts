@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
-import { ExtractLibInfoService } from '../services/extract-lib-info.service';
+import { ExtractLibInfoService } from '../../services/extract-lib-info.service';
 
 @Component({
   selector: 'app-library-home',

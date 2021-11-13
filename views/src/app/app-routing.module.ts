@@ -4,9 +4,11 @@ import { HomeComponent } from './home/home.component';
 import { BookLayerComponent } from './library/book-layer/book-layer.component';
 import { LibraryHomeComponent } from './library/library-home/library-home.component';
 import { NewBookFormComponent } from './library/new-book-form/new-book-form.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: 'library', component: LibraryHomeComponent,
     children: [
       { path: 'add-new-book', component: NewBookFormComponent },

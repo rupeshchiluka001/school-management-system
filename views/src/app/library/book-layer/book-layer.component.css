@@ -1,15 +1,17 @@
-:host, #booksLayer {
+#booksLayer {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    align-items: center;
 }
 
 #search-box {
     width: 100%;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
-    margin: 20px 0 40px 0;
+    align-items: center;
+    margin: 20px 0;
 }
 
 select {
@@ -19,8 +21,9 @@ select {
     border-radius: 10px;
     font-size: 15px;
     padding: 10px;
-    margin: 0 10px;
+    margin: 10px;
     cursor: pointer;
+    width: 150px;
 }
 
 #inner-search-div {
@@ -71,6 +74,12 @@ app-book {
             }
         }
     }
+}
+
+#pageNumbers {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
 }
 
 .pgNo {

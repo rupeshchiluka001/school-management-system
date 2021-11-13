@@ -14,4 +14,38 @@
     color: white;
     margin: 0;
     padding: 0 10px;
+    cursor: pointer;
+}
+
+#signInIcon:hover + #signInDiv{
+    visibility: visible;
+}
+
+#signInDiv:hover {
+    visibility: visible;
+}
+
+#signInDiv {
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    color: #000000;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    visibility: hidden;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, 
+                rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    transition: visibility 0.2s ease-in-out;
+}
+
+#signInDiv > ul {
+    list-style: none;
+    padding:  2px 20px;
+}
+
+a {
+    color: #000000;
+    cursor: pointer;
+    text-decoration: none;
 }

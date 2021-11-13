@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { LibraryHomeComponent } from './library-home/library-home.component';
 import { NewBookFormComponent } from './new-book-form/new-book-form.component';
-import { ExtractLibInfoService } from './services/extract-lib-info.service';
+import { ExtractLibInfoService } from '../services/extract-lib-info.service';
 import { BookComponent } from './book/book.component';
 import { BookLayerComponent } from './book-layer/book-layer.component';
 

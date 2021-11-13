@@ -1,13 +1,11 @@
-<div>
-    <select name="filter" id="filter"
-    [(ngModel)]='filter'>
+<div id="search-box">
+    <select name="filter" id="filter" [(ngModel)]='filter'>
         <option value="">Search Filter</option>
         <option value="title">Book Title</option>
         <option value="author">Book Author</option>
         <option value="category">Book Field</option>
     </select>
-</div>
-<div id="search-box">
+
     <div id="inner-search-div">
         <input type="text" name="search" id="search"
             [(ngModel)]='searchValue'
@@ -31,8 +29,6 @@
     >
     </app-book>
 </div>
-
-<br>
 
 <div id="pageNumbers">
     <div class="pgNo"
