@@ -21,11 +21,7 @@
 <div id="booksLayer">
     <app-book 
     *ngFor="let book of books"
-        [title]='book.title'
-        [author]='book.author'
-        [field]='book.category'
-        [description]='book.description'
-        [stock]='book.stock'
+        [book]='book'
     >
     </app-book>
 </div>

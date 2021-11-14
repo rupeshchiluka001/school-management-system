@@ -1,9 +1,17 @@
-<div>
-    <span class="icon material-icons">more_vert</span>
+<div id="container">
+    <span (click)="toggleDiv()" class="icon material-icons">more_vert</span>
+    <div #bookOp id="bookOp">
+        <ul>
+            <a><li>Update Book</li></a>
+        </ul>
+        <ul>
+            <a><li>Delete Book</li></a>
+        </ul>
+    </div>
     <img src="../../../assets/book-icon.png" alt=""> <br>
-    <label>Title: </label> {{ title }} <br>
-    <label>Author: </label> {{ author }} <br>
-    <label>Field: </label> {{ field }} <br>
-    <label>Description: </label> {{ description }} <br>
+    <label>Title: </label> {{ book.title }} <br>
+    <label>Author: </label> {{ book.author }} <br>
+    <label>Field: </label> {{ book.category }} <br>
+    <label>Description: </label> {{ book.description }} <br>
     <label>Currently Available: </label> {{ currentlyAvailable }} <br>
 </div>
