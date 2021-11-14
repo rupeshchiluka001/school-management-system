@@ -8,6 +8,7 @@ const routes = require('./routes');
 const libraryRoutes = require('./routes/library');
 const connection = require('./config/database');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config;
 
@@ -21,6 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(__dirname+'/public'));
+
+app.use(cookieParser());
 
 const dbOptions = {
     useNewUrlParser: true,
@@ -40,7 +43,7 @@ app.use(session({
     saveUninitialized: true,
     store: sessionStore,
     cookie: {
-        maxAge: 7*1000*60*60*24 // 7 days
+        maxAge: 604800000 // 7 days
     }
 }));
 

@@ -1,32 +1,29 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const connection = require('./database');
-const User = connection.models.User;
+const User = require('../models/user');
 const { validatePassword } = require('../lib/passwordUtils');
-
-const customFields = {
-    usernameField: 'uname',
-    passwordField: 'pwd'
-};
 
 const verifyCallback = ((username, password, done) => {
     User.findOne({username: username})
         .then((user) => {
             if (!user) return done(null, false);
 
-            const isValid = validatePassword(password);
+            const isValid = validatePassword(password, user.hash, user.salt);
 
             if (isValid) {
+                console.log("🕺🕺🕺🕺🕺🕺🕺🕺");
                 return done(null, user);
             }
             else {
+                console.log("📖📖📖📖📖📖📖");
                 return done(null, false);
             }
         })
         .catch(err => done(err))
 });
 
-const strategy = new localStrategy(customFields, verifyCallback);
+const strategy = new localStrategy(verifyCallback);
 
 passport.use(strategy);
 

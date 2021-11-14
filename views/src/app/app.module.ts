@@ -7,12 +7,14 @@ import { LibraryModule } from './library/library.module';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SignUpComponent
+    SignUpComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,

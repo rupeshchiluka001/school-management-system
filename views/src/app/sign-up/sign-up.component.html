@@ -1,40 +1,42 @@
 <!-- name, passsword, gender, email, dob, role -->
 <h1>Sign Up Form</h1>
 <form (ngSubmit)="submitForm()">
-    <label for="name">Name:</label> <br>
+    <label for="uname">Name:</label> <br>
     <input type="text" placeholder="Enter Full Name ..."
-        id="name" name="name" [(ngModel)]="name"> <br>
+        id="uname" name="uname" [(ngModel)]="user.name"> <br>
 
     <label for="email">Email:</label> <br>
     <input type="text" placeholder="Enter email ..."
-        id="email" name="email" [(ngModel)]="email"> <br>
+        id="email" name="email" [(ngModel)]="user.email"> <br>
 
     <label for="pwd">Password:</label> <br>
     <input type="text" placeholder="Enter Password ..."
-        id="pwd" name="pwd" [(ngModel)]="pwd"> <br>
+        id="pwd" name="pwd" [(ngModel)]="user.password"> <br>
         
     <label for="gender">Gender:</label> <br>
     <input type="radio" name="gender" id="male" value="male" 
-        [(ngModel)]="gender">
+        [(ngModel)]="user.gender">
     <label for="male">Male</label> <br>
 
     <input type="radio" name="gender" id="female" value="female" 
-        [(ngModel)]="gender">
+        [(ngModel)]="user.gender">
     <label for="female">Female</label> <br>
 
     <input type="radio" name="gender" id="other" value="other" 
-        [(ngModel)]="gender">
+        [(ngModel)]="user.gender">
     <label for="other">Other</label> <br>
 
     <label for="dob">Date of Birth: </label> <br>
-    <input type="date" name="dob" id="dob" [(ngModel)]="dateOfBirth"> <br>
+    <input type="date" name="dob" id="dob" [(ngModel)]="user.DOB"> <br>
 
     <label for="role">Role:</label> <br>
-    <select name="role" id="role" [(ngModel)]='role'>
+    <select name="role" id="role" [(ngModel)]='user.role'>
         <option value="student">Student</option>
         <option value="professor">Professor</option>
         <option value="librarian">Librarian</option>
         <option value="warden">Warden</option>
         <option value="admin">Admin</option>
-    </select>
+    </select> <br>
+
+    <input type="submit" value="Register" id="register">
 </form>

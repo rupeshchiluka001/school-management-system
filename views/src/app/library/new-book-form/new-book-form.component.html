@@ -6,7 +6,7 @@
             <label for="title">Book Title:</label>
 
             <div id="bookTitle" class="book">
-                <input type="text" [(ngModel)]='title' name="title" id="title"
+                <input type="text" [(ngModel)]='book.title' name="title" id="title"
                 placeholder="Enter Book title">
             </div>
         </td>
@@ -17,7 +17,7 @@
             <label for="author">Author Name:</label>
 
             <div id="bookAuthor" class="book">
-                <input type="text" [(ngModel)]='author' name="author" id="author"
+                <input type="text" [(ngModel)]='book.author' name="author" id="author"
                 placeholder="Enter Author name">
             </div>
         </td>
@@ -28,7 +28,7 @@
             <label for="isn">ISN:</label>
 
             <div id="bookIsn" class="book">
-                <input type="text" [(ngModel)]='ISN' name="isn" id="isn"
+                <input type="text" [(ngModel)]='book.ISN' name="isn" id="isn"
                 placeholder="Enter ISN">
             </div>
         </td>
@@ -39,7 +39,7 @@
             <label for="desc">Description:</label>
 
             <div id="bookDesc" class="book">
-                <input type="text" [(ngModel)]='description' name="desc" id="desc"
+                <input type="text" [(ngModel)]='book.description' name="desc" id="desc"
                 placeholder="Enter description">
             </div>
         </td>
@@ -50,7 +50,7 @@
             <label for="category">Category:</label>
 
             <div id="bookCategory" class="book">
-                <input type="text" [(ngModel)]='category' name="category" id="category"
+                <input type="text" [(ngModel)]='book.category' name="category" id="category"
                 placeholder="Comma seperated categories ex: physics, gravity">
             </div>
         </td>

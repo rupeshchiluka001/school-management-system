@@ -3,18 +3,16 @@
         <span class="icon material-icons">home</span>
     </a>
     <!-- <a href=""> -->
-        <span id="signInIcon" class="icon material-icons">
-            account_circle
-        </span>
+        <span id="signInIcon" class="icon material-icons">account_circle</span>
         <div id="signInDiv">
             <ul>
                 <a [routerLink]="['/signup']"><li>Sign Up</li></a>
             </ul>
             <ul>
-                <li>Sign In</li>
+                <a [routerLink]="['/signin']"><li>Sign In</li></a>
             </ul>
             <ul>
-                <li>Logout</li>
+                <li (click)="logout()">Logout</li>
             </ul>
         </div>
     <!-- </a> -->
