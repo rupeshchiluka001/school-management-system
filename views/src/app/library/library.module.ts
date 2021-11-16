@@ -7,13 +7,15 @@ import { NewBookFormComponent } from './new-book-form/new-book-form.component';
 import { ExtractLibInfoService } from '../services/extract-lib-info.service';
 import { BookComponent } from './book/book.component';
 import { BookLayerComponent } from './book-layer/book-layer.component';
+import { UpdateBookFormComponent } from './update-book-form/update-book-form.component';
 
 @NgModule({
   declarations: [
     LibraryHomeComponent,
     NewBookFormComponent,
     BookComponent,
-    BookLayerComponent
+    BookLayerComponent,
+    UpdateBookFormComponent
   ],
   imports: [
     CommonModule,

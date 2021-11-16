@@ -1,4 +1,4 @@
-<h1>Add new Book Form</h1>
+<h1>Update Book Info Form</h1>
 <form (ngSubmit)="submitNewBook()" id="myForm">
 <div id="container">
     <label for="title">Book Title:</label>
@@ -31,6 +31,12 @@
         placeholder="Comma seperated categories ex: physics, gravity">
     </div>
 
-    <input type="submit" value="Register" id="register">
+    <label for="stock">Stock:</label>
+    <div id="bookStock" class="book">
+        <input type="number" [(ngModel)]='book.stock' name="stock" id="stock"
+        placeholder="Number of books in library">
+    </div>
+
+    <input type="submit" value="Update" id="register">
 </div>
 </form>

@@ -16,6 +16,7 @@ export class NewBookFormComponent implements OnInit, OnDestroy {
   book: Book = {} as Book;
 
   ngOnInit(): void {
+    console.log("printing from new form component");
     this.book.stock = 1;
   }
 

@@ -71,11 +71,34 @@ exports.postNewBook =  (req, res, next) => {
 
 exports.getBookDetails = async(req, res) => {
     try {
-        const book_id = req.params.book_id;
+        const book_id = req.query.id;
         const book = await Book.findById(book_id);
-        res.render("user/bookDetails", {book: book});
+        res.status(200);
+        res.send(book);
     } catch (err) {
         console.log(err);
-        return res.redirect("back");
+        res.status(401);
+        res.send("Unable to find book");
+    }
+};
+
+exports.deleteBook = async(req, res) => {
+    try {
+        console.log(req.query);
+        const book_id = req.query.bookId;
+        const book = Book.findOneAndRemove({_id: book_id}, (err, data) => {
+            if (!err) {
+                console.log("Deleted");
+                res.status(200);
+                res.send("Book deleted successfully!!");
+            }
+            else {
+                res.status(500);
+                res.send("Unable to delete book!!");
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        // return res.redirect("back");
     }
 };

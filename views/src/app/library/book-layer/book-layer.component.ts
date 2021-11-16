@@ -1,4 +1,6 @@
+import { Conditional } from '@angular/compiler';
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
 import { ExtractLibInfoService } from '../../services/extract-lib-info.service';
@@ -10,7 +12,8 @@ import { ExtractLibInfoService } from '../../services/extract-lib-info.service';
 })
 export class BookLayerComponent implements OnInit, OnDestroy {
 
-  constructor(private libService: ExtractLibInfoService) { }
+  constructor(private libService: ExtractLibInfoService,
+              private router: Router) { }
 
   sub!: Subscription;
   books!: Book[];
@@ -23,6 +26,11 @@ export class BookLayerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getBooks("");
+  }
+
+  onNotify(book: Book): void {
+    console.log("Received book: ", book);
+    this.router.navigate(['library/update-book', book._id])
   }
 
   getBooks(queryParams: string): void {

@@ -22,6 +22,7 @@
     <app-book 
     *ngFor="let book of books"
         [book]='book'
+        (updateBookNotify)='onNotify($event)'
     >
     </app-book>
 </div>
