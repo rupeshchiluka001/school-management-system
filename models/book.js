@@ -15,9 +15,11 @@ const BookSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+        required: false,
     },
     category: {
         type: String,
+
     },
     stock: {
         type: Number,

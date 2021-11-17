@@ -18,6 +18,8 @@ export class ExtractLibInfoService {
   private getBooksUrl = `${this.apiUrl}:${this.port}/api/library`;
   private getBookDetailsUrl = `${this.apiUrl}:${this.port}/api/library/get-book`;
   private deleteBookUrl = `${this.apiUrl}:${this.port}/api/library/delete-book`;
+  private issuedBookListUrl = `${this.apiUrl}:${this.port}/api/library/get-issued-books`;
+  private postIssueUrl = `${this.apiUrl}:${this.port}/api/library/post-issue`;
 
   constructor(private http: HttpClient) { }
 
@@ -35,6 +37,14 @@ export class ExtractLibInfoService {
 
   getBookDetails(id: string): Observable<any> {
     return this.http.get(this.getBookDetailsUrl, {params: {id}, responseType: 'text'});
+  }
+
+  getIssuedBookList(userId: string): Observable<Book[]> {
+    return this.http.get<Book[]>(this.issuedBookListUrl, {params: {userId}});
+  }
+
+  postIssue(bookId: string, userId: string): Observable<any> {
+    return this.http.post(this.postIssueUrl, {bookId, userId});
   }
 
   deleteBook(bookId: string): Observable<any> {

@@ -1,4 +1,7 @@
+const { user } = require('../config/database');
 const Book = require('../models/book');
+const User = require('../models/user');
+const Issue = require('../models/issue');
 const PER_PAGE = 10;
 
 exports.getBooks = async(req, res, next) => {
@@ -21,7 +24,6 @@ exports.getBooks = async(req, res, next) => {
                         .limit(PER_PAGE);
 
         const count = await Book.find(searchObj).countDocuments();
-        console.log(req.user);
 
         res.send({
             books: books,
@@ -38,35 +40,96 @@ exports.getBooks = async(req, res, next) => {
     }
 };
 
+exports.getIssuedBooks = (req, res, next) => {
+    console.log("postIssueBook: ", req.query);
+    console.log(req.query.userId);
+
+    Issue.find({'userId': req.query.userId})
+        .then((issues) => {
+            console.log("Issues: ", issues);
+            if (issues.length == 0) {
+                res.status(200);
+                res.send({});
+            }
+            else {
+                console.log("issues: ",issues);
+                let bookIds = issues.map(issue => issue.bookId);
+                console.log(bookIds);
+                Book.find({ '_id': { $in: bookIds} }, (err, books) => {
+                    console.log("books: ", books);
+                    res.status(200);
+                    res.send(books);
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("geting issued books err: ",err);
+            res.status(401);
+            res.send("Error during getting issued books, try again later!");
+        });
+    
+};
+
+exports.postIssue = async (req, res, next) => {
+    let bookId = req.body.bookId;
+    let userId = req.body.userId;
+    const MAX_ISSUES = 5;
+
+    let book = await Book.findById(bookId);
+    let user = await User.findById(userId);
+
+    if ((book != null) && (user != null) && (book.stock > 0) && (user.bookIssues < MAX_ISSUES)) {
+        // a student can issue at max 5 books for a given time
+        const newIssue = new Issue({
+            bookId: bookId,
+            userId: userId,
+            bookTitle: book.title,
+            userName: user.name
+        });
+        
+        newIssue.save()
+            .then((issue) => {
+                let NoOfbookIssues = user.bookIssues+1;
+                let bookStock = book.stock-1;
+                Book.findByIdAndUpdate(bookId, {stock: bookStock}, 
+                    (err, book) => {});
+                User.findByIdAndUpdate(userId, {bookIssues: NoOfbookIssues},
+                    (err, user) => {});
+                res.status(200);
+                res.send(issue);
+            })
+            .catch((err) => {
+                console.log("issue err: ",err);
+                res.status(401);
+                res.send("Error during issuing, try again later!");
+            })
+    }
+    else {
+        res.status(200);
+        res.send("You are not allowed");
+    }
+};
+
 exports.postNewBook =  (req, res, next) => {
-
-    console.log(req.body);
-    console.log(req.body.title);
-    console.log(req.body.author);
-    console.log(req.body.ISN);
-    console.log(req.body.description);
-    console.log(req.body.category); 
-
     const newBook = new Book({
         title: req.body.title,
         author: req.body.author,
         ISN: req.body.ISN,
         description: req.body.description,
         category: req.body.category,
-        stock: 1,
+        stock: req.body.stock,
     });
 
     newBook.save()
-        .then((book) => {   
-            console.log(book);
-            console.log("📖📖📖📖📖📖📖");
+        .then((book) => {
             res.status(200);
+            res.send(book);
         })
         .catch((err) => {
             console.log("Err: "+err);
             res.status(500);
+            res.send("Error during saving book. Try again later! Err: ", err);
         })
-    res.send(newBook);
 };
 
 exports.getBookDetails = async(req, res) => {

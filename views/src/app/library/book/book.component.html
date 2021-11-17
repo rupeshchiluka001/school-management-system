@@ -2,10 +2,11 @@
     <span (click)="toggleDiv()" class="icon material-icons">more_vert</span>
     <div #bookOp id="bookOp">
         <ul>
-            <a (click)='notifyUpdate()'><li>Update Book</li></a>
-        </ul>
-        <ul>
-            <a (click)="deleteBook()"><li>Delete Book</li></a>
+            <a *ngIf="role==='librarian' || role==='admin'" 
+                (click)='notifyUpdate()'><li>Update Book</li></a>
+            <a *ngIf="role==='librarian' || role==='admin'" 
+                (click)="deleteBook()"><li>Delete Book</li></a>
+            <a (click)="issueBook()"><li>Issue this Book</li></a>
         </ul>
     </div>
     <img src="../../../assets/book-icon.png" alt=""> <br>

@@ -11,6 +11,7 @@ export class LibNewFormBookGuard implements CanActivate {
   constructor(private cookieService: ExtractCookieService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return ( this.cookieService.getRole() === 'librarian' ) ? true : false;
+    let role = this.cookieService.getRole();
+    return ( role === 'admin' || role === 'librarian' ) ? true : false;
   }
 }

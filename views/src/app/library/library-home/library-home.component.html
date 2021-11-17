@@ -1,10 +1,12 @@
-<p>library-home works!</p>
+<span id="leftPanel">
+    <span class="material-icons">dashboard</span>
+    <ul>
+        <a [routerLink]="['/library/home']"><li>Library Home</li></a>
+        <a *ngIf="role==='librarian' || role==='admin'" [routerLink]="['/library/add-new-book']"><li>Insert Book</li></a>
+        <a [routerLink]="['/library/return-books']"><li>Return Books</li></a>
+    </ul>
+</span>
 
-<!-- <a [routerLink]="[{ outlets: { newBook: ['/library/add-new-book'] } }]">
-    <div>Insert Book</div>
-</a> -->
-<a [routerLink]="['/library/add-new-book']">
-    <div>Insert Book</div>
-</a>
-
-<router-outlet></router-outlet>
+<span id="outerContainer">
+    <router-outlet></router-outlet>
+</span>

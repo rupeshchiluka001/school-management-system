@@ -2,21 +2,21 @@ const router = require('express').Router();
 const passport = require('passport');
 const { genPassword } = require('../lib/passwordUtils');
 const connection = require('../config/database');
-const User = connection.models.User;
+const User = require('../models/user');
 
 // router.post('/login', passport.authenticate('local', {failureRedirect: '/login', successRedirect: '/'})
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
     let role = req.user.role;
     res.status(200);    
     console.dir(res.cookie);
-    res.cookie('role', role, {maxAge: 604800000, httpOnly: false});
+    res.cookie('role', role, {maxAge: 604800000});
+    res.cookie('id', req.user._id, {maxAge: 604800000});
     res.send(role);
     console.dir(req.cookies);
     console.dir(res.req.session);
 });
 
 router.post('/register', (req, res, next) => {
-    console.log(req.body);
     const saltHash = genPassword(req.body.password);
 
     const newUser = new User({
@@ -31,11 +31,12 @@ router.post('/register', (req, res, next) => {
 
     newUser.save()
         .then((user) => {
-            console.log("Successfully user registered!!");
-            console.log(user);
-            console.log("🕺🕺🕺🕺🕺🕺🕺🕺");
             res.status(200);
             res.send("Successfully user registered!!");
+        })
+        .catch(err => {
+            res.status(401);
+            res.send("Not able to create User, try again later.Err: ",err);
         })
 });
 

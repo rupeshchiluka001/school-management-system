@@ -31,6 +31,12 @@
         placeholder="Comma seperated categories ex: physics, gravity">
     </div>
 
+    <label for="stock">Stock:</label>
+    <div id="bookStock" class="book">
+        <input type="number" [(ngModel)]='book.stock' name="stock" id="stock"
+        placeholder="Stock ...">
+    </div>
+
     <input type="submit" value="Register" id="register">
 </div>
 </form>

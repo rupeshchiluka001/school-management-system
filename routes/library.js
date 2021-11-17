@@ -9,6 +9,10 @@ router.get('/delete-book', libraryMethods.deleteBook);
 
 router.get('/get-book', libraryMethods.getBookDetails);
 
+router.get('/get-issued-books', libraryMethods.getIssuedBooks);
+
+router.post('/post-issue', libraryMethods.postIssue);
+
 router.get('/', libraryMethods.getBooks);
 
 module.exports = router;

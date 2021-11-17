@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
 import { ExtractLibInfoService } from 'src/app/services/extract-lib-info.service';
 import { EventEmitter } from '@angular/core';
+import { ExtractCookieService } from 'src/app/services/extract-cookie.service';
 
 @Component({
   selector: 'app-book',
@@ -12,7 +13,8 @@ import { EventEmitter } from '@angular/core';
 export class BookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private renderer: Renderer2,
-              private libService: ExtractLibInfoService) { }
+              private libService: ExtractLibInfoService,
+              private cookieService: ExtractCookieService) { }
 
   @Input() book!: Book;
   currentlyAvailable: Boolean = false;
@@ -21,8 +23,10 @@ export class BookComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() updateBookNotify: EventEmitter<Book> = new EventEmitter<Book>();
   div!: HTMLDivElement;
   sub!: Subscription;
+  role = this.cookieService.getRole();
 
   ngOnInit(): void {
+    console.log("Book: ", this.role);
     if (this.book.stock > 0) {
       this.currentlyAvailable = true;
     }
@@ -45,6 +49,14 @@ export class BookComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log("deleting ", this.book._id);
     this.sub = this.libService.deleteBook(this.book._id).subscribe({
       next: data => console.log("Book:", data),
+      error: err => console.log("err: ", err),
+    });
+  }
+
+  issueBook(): void {
+    console.log("issuing: ", this.book._id);
+    this.libService.postIssue(this.book._id, this.cookieService.getId()).subscribe({
+      next: data => console.log("issues:", data),
       error: err => console.log("err: ", err),
     });
   }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
+import { ExtractCookieService } from 'src/app/services/extract-cookie.service';
 import { ExtractLibInfoService } from '../../services/extract-lib-info.service';
 
 @Component({
@@ -10,10 +11,22 @@ import { ExtractLibInfoService } from '../../services/extract-lib-info.service';
 })
 export class LibraryHomeComponent implements OnInit, OnDestroy {
 
+  constructor(private cookieService: ExtractCookieService) {}
+
   hello: string = "Hello world";
   books: Book[] = [];
+  movedLeft = false;
+  role = '';
 
   ngOnInit(): void {
+    this.role = this.cookieService.getRole();
+    console.log("role: ",this.role);
+  }
+
+  toggleLeftPanel(): void {
+    if ( !this.movedLeft ) {
+      
+    }
   }
 
   ngOnDestroy(): void {

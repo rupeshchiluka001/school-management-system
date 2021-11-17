@@ -30,7 +30,12 @@ const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true,
-    }
+    },
+    bookIssues: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
 });
 
 module.exports = connection.model("User", UserSchema);
