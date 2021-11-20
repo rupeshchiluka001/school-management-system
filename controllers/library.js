@@ -41,10 +41,14 @@ exports.getBooks = async(req, res, next) => {
 };
 
 exports.getIssuedBooks = (req, res, next) => {
-    console.log("postIssueBook: ", req.query);
-    console.log(req.query.userId);
 
-    Issue.find({'userId': req.query.userId})
+    if (!req.isAuthenticated()) {
+        console.log("not authenticated");
+        res.status(401);
+        res.send("Please login first");
+        return;
+    }
+    Issue.find({'userId': req.session.passport.user})
         .then((issues) => {
             console.log("Issues: ", issues);
             if (issues.length == 0) {
@@ -72,13 +76,13 @@ exports.getIssuedBooks = (req, res, next) => {
 
 exports.postIssue = async (req, res, next) => {
     let bookId = req.body.bookId;
-    let userId = req.body.userId;
+    let userId = req.session.passport.user;
     const MAX_ISSUES = 5;
 
     let book = await Book.findById(bookId);
     let user = await User.findById(userId);
 
-    if ((book != null) && (user != null) && (book.stock > 0) && (user.bookIssues < MAX_ISSUES)) {
+    if (book && user && (book.stock > 0) && (user.bookIssues < MAX_ISSUES)) {
         // a student can issue at max 5 books for a given time
         const newIssue = new Issue({
             bookId: bookId,
@@ -89,12 +93,8 @@ exports.postIssue = async (req, res, next) => {
         
         newIssue.save()
             .then((issue) => {
-                let NoOfbookIssues = user.bookIssues+1;
-                let bookStock = book.stock-1;
-                Book.findByIdAndUpdate(bookId, {stock: bookStock}, 
-                    (err, book) => {});
-                User.findByIdAndUpdate(userId, {bookIssues: NoOfbookIssues},
-                    (err, user) => {});
+                Book.findByIdAndUpdate(bookId, {$inc: {stock: -1}}, (err, book) => {});
+                User.findByIdAndUpdate(userId, {$inc: {bookIssues: 1}}, (err, user) => {});
                 res.status(200);
                 res.send(issue);
             })
@@ -107,6 +107,28 @@ exports.postIssue = async (req, res, next) => {
     else {
         res.status(200);
         res.send("You are not allowed");
+    }
+};
+
+exports.getReturnBook = async (req, res, next) => {
+    let bookId = req.query.bookId;
+    let userId = req.session.passport?.user;
+
+    if (userId && bookId) {
+        Issue.findOneAndDelete({bookId: bookId, userId: userId}, function(err, issue) {
+            if (err) {
+                console.log("Err: ", err);
+                res.status(401);
+                res.send("Error during returning book. Try again later! Err: ", err);
+            }
+            else {
+                console.log("Deleted Issue: ", issue);
+                Book.findByIdAndUpdate(bookId, {$inc: {stock: 1}}, (err, book) => {});
+                User.findByIdAndUpdate(userId, {$inc: {bookIssues: -1}}, (err, user) => {});
+                res.status(200);
+                res.send("Book Returned!!");
+            }
+        });
     }
 };
 

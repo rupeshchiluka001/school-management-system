@@ -17,16 +17,20 @@ export class BookComponent implements OnInit, AfterViewInit, OnDestroy {
               private cookieService: ExtractCookieService) { }
 
   @Input() book!: Book;
-  currentlyAvailable: Boolean = false;
-  divShown = false;
+  @Input() returningList = false;
   @ViewChild('bookOp') bookOp!: ElementRef;
   @Output() updateBookNotify: EventEmitter<Book> = new EventEmitter<Book>();
-  div!: HTMLDivElement;
-  sub!: Subscription;
+  currentlyAvailable: Boolean = false;
+  divShown = false;
   role = this.cookieService.getRole();
+  div!: HTMLDivElement;
+  issueSub!: Subscription;
+  deleteSub!: Subscription;
+  returnSub!: Subscription;
 
   ngOnInit(): void {
     console.log("Book: ", this.role);
+    console.log("Returning List: ", this.returningList);
     if (this.book.stock > 0) {
       this.currentlyAvailable = true;
     }
@@ -47,7 +51,7 @@ export class BookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   deleteBook(): void {
     console.log("deleting ", this.book._id);
-    this.sub = this.libService.deleteBook(this.book._id).subscribe({
+    this.deleteSub = this.libService.deleteBook(this.book._id).subscribe({
       next: data => console.log("Book:", data),
       error: err => console.log("err: ", err),
     });
@@ -55,16 +59,23 @@ export class BookComponent implements OnInit, AfterViewInit, OnDestroy {
 
   issueBook(): void {
     console.log("issuing: ", this.book._id);
-    this.libService.postIssue(this.book._id, this.cookieService.getId()).subscribe({
+    this.issueSub = this.libService.postIssue(this.book._id).subscribe({
       next: data => console.log("issues:", data),
       error: err => console.log("err: ", err),
     });
   }
 
+  returnBook(): void {
+    this.returnSub = this.libService.returnBook(this.book._id).subscribe({
+      next: data => console.log("returning book: ", data),
+      error: err => console.log("err: ", err),
+    });
+  }
+
   ngOnDestroy(): void {
-    if ( this.sub ) {
-      this.sub.unsubscribe();
-    }
+    if ( this.issueSub ) this.issueSub.unsubscribe();
+    if ( this.deleteSub ) this.deleteSub.unsubscribe();
+    if ( this.returnSub ) this.returnSub.unsubscribe();
   }
 
 }

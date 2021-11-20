@@ -1,6 +1,7 @@
-<div id="booksLayer">
+<div id="returnBooksLayer">
     <app-book 
     *ngFor="let book of books"
-        [book]='book'>
+        [book]='book'
+        [returningList]='true'>
     </app-book>
 </div>

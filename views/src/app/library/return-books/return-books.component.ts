@@ -18,7 +18,7 @@ export class ReturnBooksComponent implements OnInit {
   books!: Book[];
 
   ngOnInit(): void {
-    this.libService.getIssuedBookList(this.cookieService.getId()).subscribe({
+    this.libService.getIssuedBookList().subscribe({
       next: data => {
         console.log("return books:", data)
         this.books = data;

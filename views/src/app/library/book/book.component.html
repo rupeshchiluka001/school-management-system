@@ -6,7 +6,10 @@
                 (click)='notifyUpdate()'><li>Update Book</li></a>
             <a *ngIf="role==='librarian' || role==='admin'" 
                 (click)="deleteBook()"><li>Delete Book</li></a>
-            <a (click)="issueBook()"><li>Issue this Book</li></a>
+            <a *ngIf="!returningList" 
+                (click)="issueBook()"><li>Issue this Book</li></a>
+            <a *ngIf="returningList" 
+                (click)="returnBook()"><li>Return this Book</li></a>
         </ul>
     </div>
     <img src="../../../assets/book-icon.png" alt=""> <br>
