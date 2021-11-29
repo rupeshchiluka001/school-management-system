@@ -6,6 +6,7 @@ const passport = require('passport');
 const path = require('path');
 const routes = require('./routes');
 const libraryRoutes = require('./routes/library');
+const hostelRoutes = require('./routes/hostel');
 const connection = require('./config/database');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -55,6 +56,7 @@ app.use(passport.session());
 //routes after other middleware, and before error handler
 app.use('/api', routes)
 app.use('/api/library', libraryRoutes);
+app.use('/api/hostel', hostelRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname+'/public/index.html'))

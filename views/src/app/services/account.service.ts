@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { User } from '../models/user';
 
 @Injectable({
@@ -13,18 +14,38 @@ export class AccountService {
   private signUpUrl = `${this.apiUrl}:${this.port}/api/register`;
   private signInUrl = `${this.apiUrl}:${this.port}/api/login`;
   private logOutUrl = `${this.apiUrl}:${this.port}/api/logout`;
+  private getUserDetailsUrl = `${this.apiUrl}:${this.port}/api/user-details`;
 
   constructor(private http: HttpClient) { }
 
   registerUser(userData: User): Observable<any> {
-    return this.http.post(this.signUpUrl, userData, {responseType: 'text'});
+    return this.http.post(this.signUpUrl, userData);
   }
 
   loginUser(username: string, password: string): Observable<any> {
-    return this.http.post(this.signInUrl, {username, password}, {responseType: 'text'});
+    return this.http.post(this.signInUrl, {username, password});
   }
 
   logoutUser(): Observable<any> {
-    return this.http.get(this.logOutUrl);
+    return this.http.get(this.logOutUrl).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  getUserDetails(): Observable<User> {
+    return this.http.get<User>(this.getUserDetailsUrl).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  handleError(error: HttpErrorResponse): Observable<never> {
+    if (error.status === 0) {
+      console.log("An error occurred: ", error.error);
+    }
+    else {
+      console.log("Hello");
+    }
+    return throwError(() => error);
+    
   }
 }

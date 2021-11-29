@@ -2,8 +2,10 @@
     <span class="material-icons">dashboard</span>
     <ul>
         <a [routerLink]="['/library/home']"><li>Library Home</li></a>
-        <a *ngIf="role==='librarian' || role==='admin'" [routerLink]="['/library/add-new-book']"><li>Insert Book</li></a>
-        <a [routerLink]="['/library/return-books']"><li>Return Books</li></a>
+        <a *ngIf="role==='librarian' || role==='admin'" 
+            [routerLink]="['/library/add-new-book']"><li>Insert Book</li></a>
+        <a *ngIf="role!==''"
+            [routerLink]="['/library/return-books']"><li>Return Books</li></a>
     </ul>
 </span>
 

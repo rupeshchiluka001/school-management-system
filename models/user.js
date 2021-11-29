@@ -17,6 +17,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    motherName: {
+        type: String,
+    },
+    fatherName: {
+        type: String,
+    },
     hash: {
         type: String,
     },
@@ -36,6 +42,11 @@ const UserSchema = new mongoose.Schema({
         required: false,
         default: 0,
     },
+    hosteller: {
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: 'Room',
+        required: false
+    }
 });
 
 module.exports = connection.model("User", UserSchema);

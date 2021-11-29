@@ -1,0 +1,15 @@
+<div id="requestLayer">
+    <app-hostel-request 
+    *ngFor="let request of requestList"
+        [request]='request'>
+    </app-hostel-request>
+</div>
+
+<div id="pageNumbers">
+    <div class="pgNo"
+        *ngFor='let page of pageArray(); let i = index'
+        [ngStyle]="showSelectedPage(i+1)"
+        (click)="pageClicked(i+1)">
+        {{ i+1 }}
+    </div>
+</div>

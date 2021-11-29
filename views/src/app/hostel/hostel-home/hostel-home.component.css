@@ -1,0 +1,37 @@
+:host {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    min-height: 91vh;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+li {
+    margin: 0 0 10px -10px;
+}
+
+li::before {
+    content: "-> ";
+}
+
+#leftPanel {
+    min-width: 250px;
+    border: 1px solid black;
+    transition: margin 1s ease-in;
+    position: sticky;
+    top: 0;
+}
+
+#outerContainer {
+    flex-grow: 1;
+    border: 1px solid red;
+    padding: 20px;
+}

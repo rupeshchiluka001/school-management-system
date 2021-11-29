@@ -1,0 +1,20 @@
+<p>Hostel Room Request Form</p>
+
+<div *ngIf="applied && !roomAllotted">You're application is in progress!</div>
+
+<div *ngIf="roomAllotted">Room is already Allotted</div>
+
+<form *ngIf="!applied && !roomAllotted" (ngSubmit)='submitRequest()'>
+<div id="container">
+    <label for="name">Your Name: </label> <br>
+    <input type="text" name="name" id="name" disabled [(ngModel)]='user.name'> <br>
+
+    <label for="email">Email: </label> <br>
+    <input type="text" name="email" id="email" disabled [(ngModel)]='user.email'> <br>
+
+    <label for="role">Role: </label> <br>
+    <input type="text" name="role" id="role" disabled [(ngModel)]='user.role'> <br>
+
+    <input type="submit" value="Submit!" id="submit">
+</div>
+</form>

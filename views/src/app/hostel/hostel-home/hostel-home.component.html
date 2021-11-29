@@ -1,0 +1,12 @@
+<span id="leftPanel">
+    <ul>
+        <a [routerLink]="['/hostel/home']"><li>Hostel Home</li></a>
+        <a [routerLink]="['/hostel/book-room']"><li>Book Hostel Room</li></a>
+        <a *ngIf="role==='admin'||role==='warden'"
+            [routerLink]="['/hostel/room-requests-list']"><li>All Room Requests</li></a>
+    </ul>
+</span>
+
+<span id="outerContainer">
+    <router-outlet></router-outlet>
+</span>

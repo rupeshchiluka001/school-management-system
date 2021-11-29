@@ -5,8 +5,9 @@ const User = require('../models/user');
 const { validatePassword } = require('../lib/passwordUtils');
 
 const verifyCallback = ((username, password, done) => {
-    User.findOne({username: username})
+    User.findOne({name: username})
         .then((user) => {
+            console.log("User: ", username);
             if (!user) return done(null, false);
 
             const isValid = validatePassword(password, user.hash, user.salt);

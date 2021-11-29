@@ -1,4 +1,3 @@
-const { user } = require('../config/database');
 const Book = require('../models/book');
 const User = require('../models/user');
 const Issue = require('../models/issue');
@@ -12,7 +11,6 @@ exports.getBooks = async(req, res, next) => {
     const value = req.query.value;
     let searchObj = {};
 
-    // if (filter != 'all' && value != 'all') {
     if ( filter !== '' && value !== '' ) {
         searchObj[filter] = {"$regex": value, "$options": "i"};
     }

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AccountService } from './account.service';
+import { CanActivate } from '@angular/router';
 import { ExtractCookieService } from './extract-cookie.service';
 
 @Injectable({
@@ -9,9 +7,11 @@ import { ExtractCookieService } from './extract-cookie.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private cookieService: ExtractCookieService) { }
+  constructor(private cookieService: ExtractCookieService) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-      return ( this.cookieService.getRole() === '' ) ? true : false;
+  canActivate(): boolean {
+    console.log("In auth guard...");
+    return !(this.cookieService.getRole() === '');
   }
+  
 }

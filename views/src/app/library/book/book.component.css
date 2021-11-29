@@ -7,10 +7,14 @@
     border-radius: 5px;
     box-shadow: #0000001a 0px 4px 12px;
     position: relative;
+    width: 300px;
+    min-height: 300px;
+    color: #3f3e3e;
 }
 
 label {
     margin: 5px;
+    color: #000000;
 }
 
 img {
