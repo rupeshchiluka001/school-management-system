@@ -1,0 +1,22 @@
+<label for="name">Course Name: </label> <br>
+<input type="text" [(ngModel)]="course.name" name="name" id="name"> <br>
+
+<label for="professor">Course Professor: </label> <br>
+<input type="text" name="professor" id="professor" [(ngModel)]="course.professor"> <br>
+
+<label for="description">Course Description: </label> <br>
+<input type="text" name="description" id="description" [(ngModel)]="course.description"> <br>
+
+<button (click)="addLink()">Add Link</button>
+<div class="link"
+    *ngFor="let link of course.links; index as i">
+        <label>Class Name: </label>
+        <input type="text" [(ngModel)]="link.className" placeholder="class name"> <br>
+
+        <label>Class Link: </label>
+        <input type="text" [(ngModel)]="link.classLink" placeholder="class link"> <br>
+
+        <span (click)="deleteLink(i)" class="material-icons">delete</span>
+</div>
+
+<button (click)="updateCourse()">Update</button>

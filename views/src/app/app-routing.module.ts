@@ -14,7 +14,7 @@ const routes: Routes = [
     loadChildren: () => import('./library/library.module').then(m => m.LibraryModule)  },
   { path: 'hostel', canActivate: [AuthGuard],
     loadChildren: () => import('./hostel/hostel.module').then(m => m.HostelModule) },
-  { path: 'tutoring-scripts', canActivate: [AuthGuard],
+  { path: 'tutoring-scripts',
     loadChildren: () => import('./tutoring-scripts/tutoring-scripts.module').then(m => m.TutoringScriptsModule) },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },

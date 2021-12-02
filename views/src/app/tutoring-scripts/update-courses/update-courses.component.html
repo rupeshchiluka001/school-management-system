@@ -1,0 +1,17 @@
+<div *ngFor="let course of courseList.courses">
+    Course Name: {{ course.name }} <br>
+    Course Professorr: {{ course.professor }} <br>
+    Course Description: {{ course.description }} <br>
+    <a [routerLink]="['/tutoring-scripts/update-course', course._id]">
+        <button>OPEN</button>
+    </a>
+</div>
+
+<div id="pageNumbers">
+    <div class="pgNo"
+        *ngFor='let page of pageArray(); let i = index'
+        [ngStyle]="showSelectedPage(i+1)"
+        (click)="pageClicked(i+1)">
+        {{ i+1 }}
+    </div>
+</div>

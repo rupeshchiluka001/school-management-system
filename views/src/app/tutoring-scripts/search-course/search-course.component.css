@@ -1,9 +1,9 @@
-#booksLayer {
+/* #courseLayer {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-}
+} */
 
 #search-box {
     width: 100%;
@@ -55,7 +55,7 @@ select {
     transform: translateY(-50%);
 }
 
-app-book {
+/* app-book {
     display: inline-block;
     padding: 10px;
 }
@@ -74,9 +74,9 @@ app-book {
             }
         }
     }
-}
+} */
 
-#pageNumbers {
+/* #pageNumbers {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -88,4 +88,4 @@ app-book {
     padding: 10px;
     margin: 20px;
     border-radius: 5px;
-}
+} */

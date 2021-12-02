@@ -36,16 +36,19 @@ router.post('/register', async (req, res, next) => {
         fatherName: req.body.fatherName,
         role: req.body.role,
     });
+    console.log(newUser);
 
     if (await User.findOne({email: req.body.email}).exec()) {
         res.status(204);
         res.send("A user already registered with same email");
+        console.log("A user already registered with same email");
         return;
     }
 
     if (await User.findOne({email: req.body.email}).exec()) {
         res.status(204);
         res.send("A user already registered with same username");
+        console.log("A user already registered with same username");
         return;
     }
 
@@ -53,10 +56,12 @@ router.post('/register', async (req, res, next) => {
         .then((user) => {
             res.status(200);
             res.send("Successfully user registered!!");
+            console.log("Successfully user registered!!");
         })
         .catch(err => {
             res.status(401);
             res.send("Not able to create User, try again later.Err: ",err);
+            console.log("Not able to create User, try again later.Err: ",err);
         })
 });
 

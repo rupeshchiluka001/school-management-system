@@ -36,6 +36,7 @@ li::before {
     position: sticky;
     top: 0;
 }
+
 #outerContainer {
     flex-grow: 1;
     border: 1px solid red;

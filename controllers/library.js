@@ -29,12 +29,12 @@ exports.getBooks = async(req, res, next) => {
             pages: Math.ceil(count/PER_PAGE),
             filter: filter,
             value: value,
-            user: req.user,
         });
         // res.send(books);
     } catch (err) {
-        console.log(err);
-        console.log(500);
+        console.log("Err: ", err);
+        res.status(500);
+        res.send({"msg": "Internal Error! Try again later!"});
     }
 };
 

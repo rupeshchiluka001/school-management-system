@@ -1,0 +1,36 @@
+<div id="search-box">
+    <select name="filter" id="filter" [(ngModel)]='courseList.filter'>
+        <option value="">Search Filter</option>
+        <option value="title">Course Title</option>
+        <option value="professor">Course Professor</option>
+    </select>
+
+    <div id="inner-search-div">
+        <input type="text" name="search" id="search"
+            [(ngModel)]='courseList.value'
+            (keydown.enter)="getList(1)"
+            placeholder="Search a course: C, Java, ...">
+        <span
+            (click)="getList(1)" class="icon material-icons">search</span>
+    </div>
+</div>
+
+<br>
+
+<div *ngFor="let course of courseList.courses">
+    Course Name: {{ course.name }} <br>
+    Course Professorr: {{ course.professor }} <br>
+    Course Description: {{ course.description }} <br>
+    <a [routerLink]="['/tutoring-scripts/course', course._id]">
+        <button>OPEN</button>
+    </a>
+</div>
+
+<div id="pageNumbers">
+    <div class="pgNo"
+        *ngFor='let page of pageArray(); let i = index'
+        [ngStyle]="showSelectedPage(i+1)"
+        (click)="pageClicked(i+1)">
+        {{ i+1 }}
+    </div>
+</div>

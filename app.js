@@ -7,6 +7,7 @@ const path = require('path');
 const routes = require('./routes');
 const libraryRoutes = require('./routes/library');
 const hostelRoutes = require('./routes/hostel');
+const tsRoutes = require('./routes/ts');
 const connection = require('./config/database');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -57,6 +58,7 @@ app.use(passport.session());
 app.use('/api', routes)
 app.use('/api/library', libraryRoutes);
 app.use('/api/hostel', hostelRoutes);
+app.use('/api/ts', tsRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname+'/public/index.html'))
