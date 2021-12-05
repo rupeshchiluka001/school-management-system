@@ -23,10 +23,9 @@ export class AddNewCourseComponent implements OnInit, OnDestroy {
     this.course.links = [];
     this.userSub = this.accountService.getUserDetails().subscribe({
       next: data => {
-        console.log("Data: ", data);
         this.course.professor = data.name;
       },
-      error: err => console.log("Err: ", err)
+      error: err => alert(`Err: ${err.error.msg}`)
     });
   }
 
@@ -42,9 +41,10 @@ export class AddNewCourseComponent implements OnInit, OnDestroy {
     console.log(this.course);
     this.tsSub = this.tsService.addNewCourse(this.course).subscribe({
       next: data => {
-        console.log(data);
+        alert(data.msg);
+        window.location.reload();
       },
-      error: err => console.log("Err: ", err)
+      error: err => alert(`Err: ${err.error.msg}`)
     });
   }
 

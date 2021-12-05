@@ -50,26 +50,44 @@ export class BookComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteBook(): void {
-    console.log("deleting ", this.book._id);
     this.deleteSub = this.libService.deleteBook(this.book._id).subscribe({
-      next: data => console.log("Book:", data),
-      error: err => console.log("err: ", err),
+      next: data => {
+        this.reload();
+      },
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+        this.reload();
+      }
     });
   }
 
   issueBook(): void {
     console.log("issuing: ", this.book._id);
     this.issueSub = this.libService.postIssue(this.book._id).subscribe({
-      next: data => console.log("issues:", data),
-      error: err => console.log("err: ", err),
+      next: data => {
+        this.reload();
+      },
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+        this.reload();
+      }
     });
   }
 
   returnBook(): void {
     this.returnSub = this.libService.returnBook(this.book._id).subscribe({
-      next: data => console.log("returning book: ", data),
-      error: err => console.log("err: ", err),
+      next: data => {
+        this.reload();
+      },
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+        this.reload();
+      }
     });
+  }
+
+  reload(): void {
+    window.location.reload();
   }
 
   ngOnDestroy(): void {

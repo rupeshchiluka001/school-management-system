@@ -19,13 +19,12 @@ export class SearchCourseComponent implements OnInit, OnDestroy {
   }
 
   getList(page: number) {
-    this.tsSub = this.tsService.getCourseList(this.courseList.filter, this.courseList.value, page).subscribe({
+    this.tsSub = this.tsService.getCourseList(this.courseList.filter || 'name', this.courseList.value, page).subscribe({
       next: data => {
-        console.log(data);
         this.courseList = data;
       },
       error: err => {
-        console.log("Err: ", err);
+        alert(`Err: ${err.error.msg}`);
       },
       complete: () => {
         this.tsSub.unsubscribe();

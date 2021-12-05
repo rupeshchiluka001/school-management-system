@@ -37,7 +37,6 @@ export class ExtractHostelInfoService {
   }
 
   acceptRequest(hostelRequestId: string, userId: string): Observable<any> {
-    console.log("hostel id: ", hostelRequestId);
     return this.http.post(this.acceptRequestUrl, {hostelRequestId, userId});
   }
 

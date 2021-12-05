@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate {
   constructor(private cookieService: ExtractCookieService) {}
 
   canActivate(): boolean {
-    console.log("In auth guard...");
     return !(this.cookieService.getRole() === '');
   }
   

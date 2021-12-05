@@ -16,17 +16,18 @@ export class NewBookFormComponent implements OnInit, OnDestroy {
   book: Book = {} as Book;
 
   ngOnInit(): void {
-    console.log("printing from new form component");
     if (this.book.stock == undefined) this.book.stock = 1;
   }
 
   submitNewBook(): Boolean {
     this.newBookSub = this.libService.postNewBook(this.book).subscribe({
         next: data => {
-          console.log("data: "+data);
-          this.ngOnInit();
+          window.location.reload();
         },
-        error: err => console.log("err: "+err)
+        error: err => {
+          alert(`Err: ${err.error.msg}`);
+          window.location.reload();
+        }
     });
     return false;
   }

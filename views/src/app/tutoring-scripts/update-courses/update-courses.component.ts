@@ -18,12 +18,11 @@ export class UpdateCoursesComponent implements OnInit, OnDestroy {
   getList(page: number) {
     this.tsSub = this.tsService.getCourseListByProfessor(page).subscribe({
       next: data => {
-        console.log(data);
         this.courseList = data;
         this.tsSub.unsubscribe();
       },
       error: err => {
-        console.log("Err: ", err)
+        alert(`Err: ${err.error.msg}`);
         this.tsSub.unsubscribe();
       }
     });

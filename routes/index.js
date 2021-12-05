@@ -5,21 +5,16 @@ const connection = require('../config/database');
 const User = require('../models/user');
 
 router.get('/user-details', (req, res, next) => {
-    console.log(req.user);
     res.send(req.user);
 });
 
 // router.post('/login', passport.authenticate('local', {failureRedirect: '/login', successRedirect: '/'})
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
     let role = req.user.role;
-    console.log("Login:", req.user);
-    res.status(200);    
-    console.dir(res.cookie);
+    res.status(200);  
     res.cookie('role', role, {maxAge: 604800000});
     res.cookie('id', req.user._id, {maxAge: 604800000});
-    res.send(role);
-    console.dir(req.cookies);
-    console.dir(res.req.session);
+    res.send({"msg": "Login Successful"});
 });
 
 router.post('/register', async (req, res, next) => {
@@ -36,51 +31,41 @@ router.post('/register', async (req, res, next) => {
         fatherName: req.body.fatherName,
         role: req.body.role,
     });
-    console.log(newUser);
 
     if (await User.findOne({email: req.body.email}).exec()) {
         res.status(204);
-        res.send("A user already registered with same email");
-        console.log("A user already registered with same email");
+        res.send({"msg": "A user already registered with same email"});
         return;
     }
 
     if (await User.findOne({email: req.body.email}).exec()) {
         res.status(204);
-        res.send("A user already registered with same username");
-        console.log("A user already registered with same username");
+        res.send({"msg": "A user already registered with same username"});
         return;
     }
 
     newUser.save()
         .then((user) => {
             res.status(200);
-            res.send("Successfully user registered!!");
-            console.log("Successfully user registered!!");
+            res.send({"msg": "Successfully user registered!!"});
         })
         .catch(err => {
             res.status(401);
-            res.send("Not able to create User, try again later.Err: ",err);
-            console.log("Not able to create User, try again later.Err: ",err);
+            res.send({"msg": `Not able to create User, try again later.Err: ${err}`});
         })
 });
 
 router.get('/logout', (req, res, next) => {
-    console.log("Checking");
-    console.log(res.req.session);
-    console.log(res.req.sessionID);
     if ( req.isAuthenticated() ) {
-        console.log("logged in");
         req.session.destroy();
         res.clearCookie('connect.sid');
         res.clearCookie('role');
         res.status(200);
-        res.send("User logged In!!");
+        res.send({"msg": "User logged Out!!"});
     }
     else {
-        console.log("not logged");
         res.status(401);
-        res.send("User not logged In!!");
+        res.send({"msg": "User not logged In!!"});
     }
 });
 

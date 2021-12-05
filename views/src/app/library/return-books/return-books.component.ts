@@ -16,14 +16,15 @@ export class ReturnBooksComponent implements OnInit {
 
   role = this.cookieService.getRole();
   books!: Book[];
+  listEmpty = false;
 
   ngOnInit(): void {
     this.libService.getIssuedBookList().subscribe({
       next: data => {
-        console.log("return books:", data)
         this.books = data;
+        if (Object.keys(data).length == 0) this.listEmpty = true;
       },
-      error: err => console.log("err: ", err),
+      error: err => alert(`Err: ${err.error.msg}`),
     });
   }
 

@@ -4,39 +4,53 @@
     <label for="title">Book Title:</label>
     <div id="bookTitle" class="book">
         <input type="text" [(ngModel)]='book.title' name="title" id="title"
+        required
         placeholder="Enter Book title">
+        <span>This field is required</span>
     </div>
 
     <label for="author">Author Name:</label>
     <div id="bookAuthor" class="book">
         <input type="text" [(ngModel)]='book.author' name="author" id="author"
+        required
         placeholder="Enter Author name">
+        <span>This field is required</span>
     </div>
     
     <label for="isn">ISN:</label>
     <div id="bookIsn" class="book">
         <input type="text" [(ngModel)]='book.ISN' name="isn" id="isn"
+        required
         placeholder="Enter ISN">
+        <span>This field is required</span>
     </div>
     
     <label for="desc">Description:</label>
     <div id="bookDesc" class="book">
         <input type="text" [(ngModel)]='book.description' name="desc" id="desc"
+        required
         placeholder="Enter description">
+        <span>This field is required</span>
     </div>
     
     <label for="category">Category:</label>
     <div id="bookCategory" class="book">
         <input type="text" [(ngModel)]='book.category' name="category" id="category"
+        required
         placeholder="Comma seperated categories ex: physics, gravity">
+        <span>This field is required</span>
     </div>
 
     <label for="stock">Stock:</label>
     <div id="bookStock" class="book">
         <input type="number" [(ngModel)]='book.stock' name="stock" id="stock"
+        required
         placeholder="Number of books in library">
+        <span>This field is required</span>
     </div>
 
-    <input type="submit" value="Update" id="register">
+    <div id="center">
+        <input type="submit" value="Update" id="register">
+    </div>
 </div>
 </form>

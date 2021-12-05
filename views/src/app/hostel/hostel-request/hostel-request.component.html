@@ -1,6 +1,7 @@
-<div>
+<div class="card">
     <label>Student Name: </label> {{ request.userName }} <br>
-    <label>Room Number: </label> {{ request.roomNo }} <br>
     <label>Hostel Name: </label> {{ request.hostelName }} <br>
+    <label>Room Number: </label> {{ request.roomNo }} <br>
+
+    <button (click)="acceptRequest()">Accept!</button>
 </div>
-<button (click)="acceptRequest()">Accept!</button>

@@ -1,13 +1,21 @@
 <!-- name, passsword, gender, email, dob, role -->
 <h1>Sign In Form</h1>
-<form (ngSubmit)="submitForm()">
-    <label for="username">Name:</label> <br>
-    <input type="text" placeholder="Enter Full Name ..."
-        id="username" name="username" [(ngModel)]="username"> <br>
+<div id="container">
+    <img src="../../assets/sign-in.svg" alt="Sign In Icon">
 
-    <label for="password">Password:</label> <br>
-    <input type="text" placeholder="Enter Password ..."
-        id="password" name="password" [(ngModel)]="password"> <br>
+    <form (ngSubmit)="submitForm()">
+        <label for="username">Name:</label> <br>
+        <input type="text" placeholder="Enter Full Name ..."
+            id="username" name="username" [(ngModel)]="username" required> 
+            <span>This field is required</span> <br>
 
-    <input type="submit" value="Register" id="register">
-</form>
+        <label for="password">Password:</label> <br>
+        <input type="text" placeholder="Enter Password ..."
+            id="password" name="password" [(ngModel)]="password" required>
+            <span>This field is required</span> <br>
+
+        <div id="center">
+            <input type="submit" value="Sign In" id="register">
+        </div>
+    </form>
+</div>

@@ -1,11 +1,11 @@
-<p>Hostel Room Request Form</p>
+<h1>Hostel Room Request Form</h1>
 
-<div *ngIf="applied && !roomAllotted">You're application is in progress!</div>
+<div class="card" *ngIf="applied && !roomAllotted">You're application is in progress!</div>
 
-<div *ngIf="roomAllotted">Room is already Allotted</div>
+<div class="card" *ngIf="roomAllotted">Room is already Allotted</div>
 
 <form *ngIf="!applied && !roomAllotted" (ngSubmit)='submitRequest()'>
-<div id="container">
+<div class="card" id="container">
     <label for="name">Your Name: </label> <br>
     <input type="text" name="name" id="name" disabled [(ngModel)]='user.name'> <br>
 

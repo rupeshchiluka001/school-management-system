@@ -29,7 +29,6 @@ export class BookLayerComponent implements OnInit, OnDestroy {
   }
 
   onNotify(book: Book): void {
-    console.log("Received book: ", book);
     this.router.navigate(['library/update-book', book._id])
   }
 

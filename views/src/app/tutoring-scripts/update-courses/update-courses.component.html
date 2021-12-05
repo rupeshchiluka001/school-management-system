@@ -1,9 +1,9 @@
-<div *ngFor="let course of courseList.courses">
+<div class="card" *ngFor="let course of courseList.courses">
     Course Name: {{ course.name }} <br>
     Course Professorr: {{ course.professor }} <br>
     Course Description: {{ course.description }} <br>
     <a [routerLink]="['/tutoring-scripts/update-course', course._id]">
-        <button>OPEN</button>
+        <button>UPDATE</button>
     </a>
 </div>
 

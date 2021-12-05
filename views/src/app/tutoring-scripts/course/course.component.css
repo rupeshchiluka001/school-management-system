@@ -1,0 +1,38 @@
+* {
+    color: #4e4e4e;
+}
+
+h1 {
+    text-align: center;
+    text-decoration: 2px solid underline;
+}
+
+#container {
+    width: 90%;
+    font-size: 17px;
+    border: 2px solid white;
+    background-color: #fafafa;
+    border-radius: 10px;
+    border-spacing: 0 10px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: #0000000d 0px 6px 24px 0px,
+                #00000014 0px 0px 0px 1px;
+}
+
+label {
+    font-size: #000000;
+    font-weight: bold;
+    margin: 20px 10px 5px;
+}
+
+#courseLinks {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+iframe {
+    margin: 10px;
+}

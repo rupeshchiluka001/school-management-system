@@ -24,7 +24,7 @@ li::before {
 
 #leftPanel {
     min-width: 250px;
-    border: 1px solid black;
+    border: 2px solid black;
     transition: margin 1s ease-in;
     position: sticky;
     top: 0;
@@ -32,6 +32,5 @@ li::before {
 
 #outerContainer {
     flex-grow: 1;
-    border: 1px solid red;
     padding: 20px;
 }

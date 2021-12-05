@@ -1,3 +1,5 @@
+<div class="card" *ngIf="listEmpty">No Books To Return!</div>
+
 <div id="returnBooksLayer">
     <app-book 
     *ngFor="let book of books"

@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HostelRequest } from 'src/app/models/hostel-request';
 import { ExtractHostelInfoService } from 'src/app/services/extract-hostel-info.service';
@@ -8,22 +9,25 @@ import { ExtractHostelInfoService } from 'src/app/services/extract-hostel-info.s
   templateUrl: './hostel-request.component.html',
   styleUrls: ['./hostel-request.component.css']
 })
-export class HostelRequestComponent implements OnInit, OnDestroy {
+export class HostelRequestComponent implements OnDestroy {
 
-  constructor(private hostelService: ExtractHostelInfoService) { }
+  constructor(private hostelService: ExtractHostelInfoService,
+              private router: Router) { }
 
   @Input() request!: HostelRequest;
   userSub!: Subscription
   sub!: Subscription;
 
-  ngOnInit(): void {
-  }
-
   acceptRequest(): void {
-    console.log("accepting");
     this.sub = this.hostelService.acceptRequest(this.request._id, this.request.userId).subscribe({
-      next: data => {console.log("Data: ", data)},
-      error: err => console.log("Err: ", err),
+      next: data => {
+        console.log("Data: ", data);
+        window.location.reload();
+      },
+      error: err => {
+        alert(`Err: ${err}`);
+        window.location.reload();
+      }
     });
   }
 

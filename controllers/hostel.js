@@ -10,7 +10,6 @@ const NO_OF_FLOORS = 3;
 const PER_PAGE = 10;
 
 exports.bookRoom = async (req, res, next) => {
-    console.log("Booking Room ...");
     const user = req.user;
     if (user == undefined) {
         res.status(401);
@@ -27,20 +26,13 @@ exports.bookRoom = async (req, res, next) => {
     const userId = user._id;
     let hostelUpdated = false, lastRoomFilled = 1, lastFloorFilled = 0;
 
-    console.log(user);
-    console.log(user.gender);
-    console.log((user.gender === 'male') ? BOYS_HOSTEL : GIRLS_HOSTEL);
-    console.log("Hello");
-
     for(let hostelName of ((user.gender === 'male') ? BOYS_HOSTEL : GIRLS_HOSTEL)) {
 
         let hostel = await Hostel.findOne({'hostelName': hostelName}).exec();
-        console.log("Hostel",hostel);
 
         try {
             // if hostel record is not there
             if (hostel == undefined) {
-                console.log("Hostel undefined");
                 //create hostel record
                 hostel = new Hostel({
                     hostelName: hostelName,
@@ -52,7 +44,6 @@ exports.bookRoom = async (req, res, next) => {
 
                 //save hostel record
                 hostel = await hostel.save();
-                console.log("Hostel: ", hostel);
 
                 //create hostelRequest record
                 let hostelRequest = await new HostelRequest({
@@ -65,14 +56,13 @@ exports.bookRoom = async (req, res, next) => {
 
                 res.status(200);
                 res.send({"msg": "Request successfully stored!"});
-                console.log("Hostel Request: ", hostelRequest);
                 return;
             }
         }
         catch (err) {
             Hostel.findOneAndDelete({'hostelName': hostelName})
                     .then(() => { });
-            console.log("err: ", err);
+            console.log("Err: ", err);
             res.status(501);
             res.send("Internal Error! Try again later!");
             return;
@@ -119,7 +109,6 @@ exports.bookRoom = async (req, res, next) => {
             
             res.status(200);
             res.send({"msg": "Request successfully stored!"});
-            console.log("Hostel Request: ", hostelRequest);
             return;
         }
         catch (err) {
@@ -127,7 +116,7 @@ exports.bookRoom = async (req, res, next) => {
                 hostel = await Hostel.findOneAndUpdate({'hostelName': hostelName},
                         {'lastRoomFilled': lastRoomFilled, 'lastFloorFilled': lastFloorFilled});
             }
-            console.log("err: ", err);
+            console.log("Err: ", err);
             res.status(501);
             res.send({"msg": "Internal Error! Try again later!"});
             return;
@@ -139,8 +128,6 @@ exports.bookRoom = async (req, res, next) => {
 };
 
 exports.getHostelRequests = async (req, res, next) => {
-    console.log("Sending all room requests ...");
-    console.log(req.query);
     const page = req.query.page || 1;
 
     try {
@@ -164,10 +151,7 @@ exports.getHostelRequests = async (req, res, next) => {
 };
 
 exports.acceptRoomRequest = async (req, res, next) => {
-    console.log("Warden Accepting Room Request...");
-    console.log("body", req.body);
     const user = req.user;
-    console.log("User",user);
     if (user == undefined) {
         res.status(401);
         res.send({"msg": "Login first!!"});
@@ -180,9 +164,7 @@ exports.acceptRoomRequest = async (req, res, next) => {
 
     try {
         //delete hostelRequest
-        console.log("body", req.body);
         hostelRequest = await HostelRequest.findByIdAndDelete(hostelRequestId);
-        console.log("hostelRequest: ", hostelRequest);
         hostelRequestDeleted = true;
 
         //create record in rooms
@@ -192,14 +174,12 @@ exports.acceptRoomRequest = async (req, res, next) => {
             allottedTo: userId
         }).save();
 
-        console.log("Room: ", room);
-
         await User.findByIdAndUpdate(userId, {'hosteller': room._id});
 
         res.status(200);
         res.send({"msg": "Room Successfully Allotted!"});
     } catch (err) {
-        console.log("ERRRRRRRRRRRRRRRR");
+        console.log("Err: ", err);
         if ( hostelRequestDeleted ) {
             await HostelRequest.insertMany(hostelRequest);
         }
@@ -209,8 +189,6 @@ exports.acceptRoomRequest = async (req, res, next) => {
 };
 
 exports.getRoomDetails = async (req, res, next) => {
-    console.log("Getting room details ...");
-    console.log(req.query);
     const user = req.user;
     if (user == undefined) {
         res.status(401);
@@ -230,14 +208,13 @@ exports.getRoomDetails = async (req, res, next) => {
         }
     }
     catch (err) {
+        console.log("Err: ",err);
         res.status(500);
-        res.send("Internal Error! Try again later!");
+        res.send({'msg': "Internal Error! Try again later!"});
     }
 };
 
 exports.checkRoomRequest = async (req, res, next) => {
-    console.log("Getting room details ...");
-    console.log(req.query);
     const user = req.user;
     if (user == undefined) {
         res.status(401);
@@ -252,19 +229,18 @@ exports.checkRoomRequest = async (req, res, next) => {
             res.send(request);
         }
         else {
-            res.status(401);
-            res.send({'msg': "User Not Applied Yet"});
+            res.status(204);
+            res.send({'msg': "204"});
         }
     }
     catch (err) {
+        console.log("Err: ", err);
         res.status(500);
         res.send({"msg": "Internal Error! Try again later!"});
     }
 };
 
 exports.leaveRoom = async (req, res, next) => {
-    console.log("Leaving Room ...");
-    console.log(req.query);
     let user = req.user;
     if (user == undefined) {
         res.status(401);

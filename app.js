@@ -33,14 +33,12 @@ const dbOptions = {
 }
 
 const sessionStore = MongoStore.create({
-    // mongoUrl: process.env.DB_STRING,
-    mongoUrl: 'mongodb://localhost:27017/sms',
+    mongoUrl: process.env.DB_STRING,
     collectionName: 'sessions'
 }, dbOptions);
 
 app.use(session({
-    // secret: process.env.SECRET,
-    secret: 'y5@@)C`ttM&:xxu9!`8sf[(&6S;M#"B%',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,

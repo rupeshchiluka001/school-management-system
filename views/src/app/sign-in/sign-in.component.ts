@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AccountService } from '../services/account.service';
-import { ExtractCookieService } from '../services/extract-cookie.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,7 +11,7 @@ import { ExtractCookieService } from '../services/extract-cookie.service';
 export class SignInComponent implements OnInit {
 
   constructor(private accountService: AccountService,
-              private cookieService : ExtractCookieService) { }
+    private router: Router) { }
 
   username = '';
   password = '';
@@ -23,18 +23,16 @@ export class SignInComponent implements OnInit {
   submitForm(): void {
     this.sub = this.accountService.loginUser(this.username, this.password).subscribe({
       next: data => {
-        console.log(data);
-        let cookie = this.cookieService.getRole();
-        console.log(cookie);
+        this.router.navigate(['']);
       },
-      error: err => console.log("err: ",err.status)
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+      }
     });
   }
 
   ngOnDestroy(): void {
-    if ( this.sub ) {
-      this.sub.unsubscribe();
-    }
+    if ( this.sub ) this.sub.unsubscribe();
   }
 
 }

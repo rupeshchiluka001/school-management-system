@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AccountService } from 'src/app/services/account.service';
@@ -24,38 +25,30 @@ export class BookRoomFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserSub = this.accountService.getUserDetails().subscribe({
       next: data => {
-        console.log("User: ", data);
         this.user = data;
         if (this.user.hosteller) {
           this.roomAllotted = true;
-          console.log("Room Allotted");
         }
       },
-      error: err => {console.log("Err occurred: ", err)}
+      error: err => {alert(`Err: ${err.error.msg}`)}
     });
 
     this.requestSub = this.hostelService.checkRequest().subscribe({
       next: data => {
-        console.log("request: ", data);
-        this.applied = true;
-        console.log("Room applied");
+        this.applied = data.msg == "204" ? false : true;
       },
-      error: err => {
-        console.log("Err: ", err);
-        if (err.status === 401) {
-          this.applied = false;
-          console.log("Room Not Applied");
-        }
-      }
+      error: err => { }
     });
   }
 
   submitRequest(): void {
     this.postDataSub = this.hostelService.bookHostelRoom().subscribe({
-      next: data => {
-        console.log("In book room form ... ", data);
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
       },
-      error: err => console.log("Error: ", err),
+      complete: () => {
+        window.location.reload();
+      }
     });
   }
 

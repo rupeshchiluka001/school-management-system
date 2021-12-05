@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/models/course';
 import { CourseLink } from 'src/app/models/course-link';
@@ -13,7 +13,8 @@ import { ExtractTsInfoService } from 'src/app/services/extract-ts-info.service';
 export class UpdateCourseComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
-              private tsService: ExtractTsInfoService) { }
+              private tsService: ExtractTsInfoService,
+              private router: Router) { }
 
   course: Course = {} as Course;  
   id = '';
@@ -24,10 +25,9 @@ export class UpdateCourseComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get('id') || '';
     this.courseSub = this.tsService.getCourseDetails(this.id).subscribe({
       next: data => {
-        console.log("Data: ", data);
         this.course = data;
       },
-      error: err => console.log("Err: ", err)
+      error: err => alert(`Err: ${err.error.msg}`)
     });
   }
 
@@ -40,10 +40,11 @@ export class UpdateCourseComponent implements OnInit, OnDestroy {
   }
 
   updateCourse(): void {
-    console.log(this.course);
     this.updateSub = this.tsService.updateCourseList(this.course).subscribe({
       next: data => {
         console.log(data);
+        alert("Course Updated Successfully!");
+        this.router.navigate(['tutoring-scripts']);
       },
       error: err => console.log("Err: ", err)
     });

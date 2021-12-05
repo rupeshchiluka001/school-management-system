@@ -1,5 +1,4 @@
 :host {
-    /* font-family: 'Roboto Slab', serif; */
     background-color: #fafafa;
 }
 
@@ -12,36 +11,39 @@ form {
     position: relative;
 }
 
-container {
+#container {
     position: absolute;
     top: 5px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 17px;
     border: 2px solid white;
-    background-color: #fff;
-    border-radius: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
     border-spacing: 0 10px;
-    box-shadow: 0px 8px 24px #959da533;
     padding: 20px;
-    min-width: 60%;
+    min-width: 90%;
+    box-shadow: #0000000d 0px 6px 24px 0px,
+                #00000014 0px 0px 0px 1px;
 }
 
 label {
     font-weight: bold;
+    margin: 20px 0 5px 0;
 }
 
 .book {
     margin: 5px 0;
 }
 
-input[type="text"] {
+input {
+    border: 1px solid black;
+    padding: 10px;
     font-size: 15px;
+    font-family: 'Mochiy Pop P One', sans-serif;
     width: 98%;
-    padding: 5px 10px;
     margin: 5px 0;
     box-sizing: border-box;
-    border: 1px solid #bbb;
     border-radius: 5px;
     background-color: #ffffff;
     outline: none;
@@ -51,22 +53,50 @@ input[type="text"]:focus {
     border: 3px solid #797474;
 }
 
+span {
+    padding: 0;
+    font-size: 12px;
+    color: red;
+    visibility: collapse;
+    display: inline-block;
+    margin: 0;
+}
+
+input:invalid {
+    border: 2px solid red;
+}
+
+input:invalid + span{
+    visibility: visible;
+    margin: 0 0 10px 0;
+}
+
+#center {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
 
 #register {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-    margin: 10px 0;
     padding: 10px;
-    background-color: #ffffff;
+    margin: 10px 0;
+    background-color: #fafafa;
+    font-size: 15px;
+    font-family: 'Mochiy Pop P One', sans-serif;
+    border: 1px solid #000000;
     border-radius: 10px;
-    border: 1px solid #f3f3f3;
-    box-shadow: 0px 2px 5px -1px #32325d40, 0px 1px 3px -1px #0000004d;
     cursor: pointer;
+    width: 200px;
+    align-self: center;
+    box-shadow: #32325d40 0px 13px 27px -5px,
+                #0000004d 0px 8px 16px -8px;
+}
+
+#register:hover {
+    background-color: #ebe9e9;
 }
 
 #register:focus {
-    box-shadow: 0 0;
-    border: 1px solid #888;
+    box-shadow: #32325d40 0px 30px 60px -12px inset,
+                #0000004d 0px 18px 36px -18px inset;
 }

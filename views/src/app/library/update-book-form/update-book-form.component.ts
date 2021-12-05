@@ -19,35 +19,33 @@ export class UpdateBookFormComponent implements OnInit, OnDestroy {
   book: Book = {} as Book;
 
   ngOnInit(): void {
-    console.log("Initilaizing update book");
     let id = this.route.snapshot.paramMap.get('id') || '';
-    console.log("From update: ",id);
-    if ( this.getBookSub ) {
-      this.getBookSub.unsubscribe();
-    }
+    
+    if ( this.getBookSub ) this.getBookSub.unsubscribe();
     this.getBookSub = this.libService.getBookDetails(id).subscribe({
       next: data => {
         this.book = JSON.parse(data);
       },
-      error: err => console.log("Error: ", err),
+      error: err => alert(`Err: ${err.error.msg}`)
     });
   }
 
   submitNewBook(): Boolean {
     this.updateBookSub = this.libService.postNewBook(this.book).subscribe({
-        next: data => console.log("data: "+data),
-        error: err => console.log("err: "+err)
+      next: data => {
+        window.location.reload();
+      },
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+        window.location.reload();
+      }
     });
     return false;
   }
 
   ngOnDestroy(): void {
-    if ( this.updateBookSub ) {
-      this.updateBookSub.unsubscribe();
-    }
-    if ( this.getBookSub ) {
-      this.getBookSub.unsubscribe();
-    }
+    if ( this.updateBookSub ) this.updateBookSub.unsubscribe();
+    if ( this.getBookSub ) this.getBookSub.unsubscribe();
   }
 
 }

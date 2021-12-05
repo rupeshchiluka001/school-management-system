@@ -3,6 +3,15 @@
     flex-flow: row wrap;
     justify-content: center;
 }
+
+.card {
+    padding: 10px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: #0000000d 0px 6px 24px 0px,
+                #00000014 0px 0px 0px 1px;
+}
+
 app-book {
     margin: 20px;
 }

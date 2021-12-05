@@ -1,24 +1,24 @@
 <h2>Details</h2>
 
-<div id="notAllotted" *ngIf="!applied && !roomAllotted">You haven't applied for hostel yet!</div>
+<div class="card" id="notAllotted" *ngIf="!applied && !roomAllotted">You haven't applied for hostel yet!</div>
 
-<div *ngIf="applied && !roomAllotted">You're application is in progress!</div>
+<div class="card" *ngIf="applied && !roomAllotted">You're application is in progress!</div>
 
-<div *ngIf="roomAllotted">
-    <div>
+<div class="card" *ngIf="roomAllotted">
+    <div id="userDetails">
         <h3>Student Details: </h3>
         <span>Student Name: </span>{{ user.name }} <br>
         <span>Date Of Birth: </span>{{ user.DOB }} <br>
         <span>Gender: </span>{{ user.gender }} <br>
         <span>Class: </span>{{ user.class }} <br>
     </div>
-    <div>
+    <div id="roomDetails">
         <h3>Room Details: </h3>
         <span>Room Number: </span>{{ room.roomNo }} <br>
         <span>Hostel Name: </span>{{ room.hostelName }} <br>
         <span>Allotted on: </span>{{ room.allottedOn }} <br>
     </div>
-    <div>
+    <div id="center">
         <button (click)="leaveRoom()">Leave Room</button>
     </div>
 </div>

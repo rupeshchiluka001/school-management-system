@@ -16,6 +16,7 @@ export class RequestListComponent implements OnInit, OnDestroy {
   currentPage = 0;
   sub!: Subscription;
   totalPages = 0;
+  listIsEmpty = false;
 
   ngOnInit(): void {
     this.getRequests(`?page=1`);
@@ -27,9 +28,17 @@ export class RequestListComponent implements OnInit, OnDestroy {
         this.requestList = data.hostelRequests;
         this.currentPage = data.current;
         this.totalPages = data.pages;
+        if (this.requestList.length === 0) {
+          this.listIsEmpty = true;
+        }
       },
-      error: err => console.log("Err: ", err)
+      error: err => alert(`Err: ${err.console.error.msg});
+      }`)
     });
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 
   pageArray(): Array<number> {

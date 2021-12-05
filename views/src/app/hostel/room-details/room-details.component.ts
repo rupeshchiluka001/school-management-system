@@ -28,45 +28,47 @@ export class RoomDetailsComponent implements OnInit, OnDestroy {
     this.userSub = this.accountService.getUserDetails().subscribe({
       next: data => {
         this.user = data;
-        console.log("User: ", data);
-        if (this.user.hosteller) {
-          this.roomAllotted = true;
-          console.log("Room alloted");
-          this.roomSub = this.hostelService.getHostelRoomDetails().subscribe({
-            next: data => {
-              this.room = data;
-              console.log("Room: ", data);
-            },
-            error: err => console.log("Err: ", err),
-          });
-        }
+        if (this.user.hosteller) this.getRoomDetails();
       },
-      error: err => console.log("Err: ", err),
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+      },
     });
 
     this.requestSub = this.hostelService.checkRequest().subscribe({
       next: data => {
-        console.log("request: ", data);
-        this.applied = true;
-        console.log("Room applied");
+        this.applied = data.msg == "204" ? false : true;
       },
       error: err => {
-        console.log("Err: ", err);
-        if (err.status === 401) {
+        if (err.status === 204) {
           this.applied = false;
-          console.log("Room Not Applied");
         }
+        alert(`Err: ${err.error.msg}`);
       }
     });
 
   }
 
+  getRoomDetails(): void {
+    this.roomAllotted = true;
+    this.roomSub = this.hostelService.getHostelRoomDetails().subscribe({
+      next: data => {
+        this.room = data;
+      },
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+      },
+    });
+  }
+
   leaveRoom(): void {
     this.leaveSub = this.hostelService.leaveHostelRoom().subscribe({
       next: data => {
-        console.log("leave: ", data);
+        window.location.reload();
       },
-      error: err =>   console.log("leave err: ", err)
+      error: err => {
+        alert(`Err: ${err.error.msg}`);
+      }
     })
   }
 

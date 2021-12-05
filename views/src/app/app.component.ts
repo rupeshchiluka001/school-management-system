@@ -10,10 +10,10 @@ import { AccountService } from './services/account.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService,
+              private router: Router) {}
 
   ngOnInit(): void {
-    console.log("initializing...");
   }
 
   title: string = 'views';
@@ -22,16 +22,14 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(): void {
     this.sub = this.accountService.logoutUser().subscribe({
       next: data => {
-        console.log("next: ", data);
         alert("User Successfully Logged Out!!");
+        this.router.navigate(['']);
       },
-      error: error => console.log("user err: ", error),
+      error: err => alert(`Err: ${err.error.msg}`),
     });
   }
 
   ngOnDestroy(): void {
-    if ( this.sub ) {
-      this.sub.unsubscribe();
-    }
+    if ( this.sub ) this.sub.unsubscribe();
   }
 }

@@ -1,7 +1,9 @@
+<div class="card" *ngIf="listIsEmpty">No New Room Requests!</div>
+
 <div id="requestLayer">
     <app-hostel-request 
-    *ngFor="let request of requestList"
-        [request]='request'>
+        *ngFor="let request of requestList"
+            [request]='request'>
     </app-hostel-request>
 </div>
 

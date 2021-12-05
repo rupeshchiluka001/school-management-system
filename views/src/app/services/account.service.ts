@@ -27,25 +27,10 @@ export class AccountService {
   }
 
   logoutUser(): Observable<any> {
-    return this.http.get(this.logOutUrl).pipe(
-      catchError(error => this.handleError(error))
-    );
+    return this.http.get(this.logOutUrl);
   }
 
   getUserDetails(): Observable<User> {
-    return this.http.get<User>(this.getUserDetailsUrl).pipe(
-      catchError(error => this.handleError(error))
-    );
-  }
-
-  handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.status === 0) {
-      console.log("An error occurred: ", error.error);
-    }
-    else {
-      console.log("Hello");
-    }
-    return throwError(() => error);
-    
+    return this.http.get<User>(this.getUserDetailsUrl);
   }
 }

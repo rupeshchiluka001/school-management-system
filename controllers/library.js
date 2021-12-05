@@ -4,8 +4,6 @@ const Issue = require('../models/issue');
 const PER_PAGE = 10;
 
 exports.getBooks = async(req, res, next) => {
-    console.log("Getting books...");
-    console.log(req.query);
     const page = req.query.page || 1;
     const filter = req.query.filter;
     const value = req.query.value;
@@ -41,33 +39,27 @@ exports.getBooks = async(req, res, next) => {
 exports.getIssuedBooks = (req, res, next) => {
 
     if (!req.isAuthenticated()) {
-        console.log("not authenticated");
         res.status(401);
-        res.send("Please login first");
+        res.send({"msg": "Please login first"});
         return;
     }
     Issue.find({'userId': req.session.passport.user})
         .then((issues) => {
-            console.log("Issues: ", issues);
             if (issues.length == 0) {
                 res.status(200);
-                res.send({});
+                res.send([]);
             }
             else {
-                console.log("issues: ",issues);
                 let bookIds = issues.map(issue => issue.bookId);
-                console.log(bookIds);
                 Book.find({ '_id': { $in: bookIds} }, (err, books) => {
-                    console.log("books: ", books);
                     res.status(200);
                     res.send(books);
                 });
             }
         })
         .catch((err) => {
-            console.log("geting issued books err: ",err);
             res.status(401);
-            res.send("Error during getting issued books, try again later!");
+            res.send({"msg": "Error during getting issued books, try again later!"});
         });
     
 };
@@ -97,14 +89,14 @@ exports.postIssue = async (req, res, next) => {
                 res.send(issue);
             })
             .catch((err) => {
-                console.log("issue err: ",err);
+                console.log("Err: ",err);
                 res.status(401);
-                res.send("Error during issuing, try again later!");
+                res.send({"msg": "Error during issuing, try again later!"});
             })
     }
     else {
         res.status(200);
-        res.send("You are not allowed");
+        res.send({"msg": "You are not allowed"});
     }
 };
 
@@ -117,14 +109,13 @@ exports.getReturnBook = async (req, res, next) => {
             if (err) {
                 console.log("Err: ", err);
                 res.status(401);
-                res.send("Error during returning book. Try again later! Err: ", err);
+                res.send({"msg": `Error during returning book. Try again later! Err: ${err}`});
             }
             else {
-                console.log("Deleted Issue: ", issue);
                 Book.findByIdAndUpdate(bookId, {$inc: {stock: 1}}, (err, book) => {});
                 User.findByIdAndUpdate(userId, {$inc: {bookIssues: -1}}, (err, user) => {});
                 res.status(200);
-                res.send("Book Returned!!");
+                res.send({"msg": "Book Returned!!"});
             }
         });
     }
@@ -148,7 +139,7 @@ exports.postNewBook =  (req, res, next) => {
         .catch((err) => {
             console.log("Err: "+err);
             res.status(500);
-            res.send("Error during saving book. Try again later! Err: ", err);
+            res.send({"msg": `Error during saving book. Try again later! Err: ${err}`});
         })
 };
 
@@ -159,29 +150,28 @@ exports.getBookDetails = async(req, res) => {
         res.status(200);
         res.send(book);
     } catch (err) {
-        console.log(err);
+        console.log("Err: ", err);
         res.status(401);
-        res.send("Unable to find book");
+        res.send({"msg": "Unable to find book"});
     }
 };
 
 exports.deleteBook = async(req, res) => {
     try {
-        console.log(req.query);
         const book_id = req.query.bookId;
         const book = Book.findOneAndRemove({_id: book_id}, (err, data) => {
             if (!err) {
-                console.log("Deleted");
                 res.status(200);
-                res.send("Book deleted successfully!!");
+                res.send({"msg": "Book deleted successfully!!"});
             }
             else {
                 res.status(500);
-                res.send("Unable to delete book!!");
+                res.send({"msg": "Unable to delete book!!"});
             }
         });
     } catch (err) {
-        console.log(err);
-        // return res.redirect("back");
+        console.log("Err: ",err);
+        res.status(500);
+        res.send({"msg": "Internal Error! Try again later!"});
     }
 };

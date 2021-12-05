@@ -1,7 +1,6 @@
 <div id="search-box">
     <select name="filter" id="filter" [(ngModel)]='courseList.filter'>
-        <option value="">Search Filter</option>
-        <option value="title">Course Title</option>
+        <option value="name">Course Title</option>
         <option value="professor">Course Professor</option>
     </select>
 
@@ -17,7 +16,7 @@
 
 <br>
 
-<div *ngFor="let course of courseList.courses">
+<div class="card" *ngFor="let course of courseList.courses">
     Course Name: {{ course.name }} <br>
     Course Professorr: {{ course.professor }} <br>
     Course Description: {{ course.description }} <br>

@@ -6,7 +6,6 @@ import { RoomDetailsComponent } from './room-details/room-details.component';
 import { BookRoomFormComponent } from './book-room-form/book-room-form.component';
 import { FormsModule } from '@angular/forms';
 import { RequestListComponent } from './request-list/request-list.component';
-import { RoomComponent } from './room/room.component';
 import { HostelRequestComponent } from './hostel-request/hostel-request.component';
 
 const routes: Routes = [
@@ -26,7 +25,6 @@ const routes: Routes = [
     RoomDetailsComponent,
     BookRoomFormComponent,
     RequestListComponent,
-    RoomComponent,
     HostelRequestComponent
   ],
   imports: [

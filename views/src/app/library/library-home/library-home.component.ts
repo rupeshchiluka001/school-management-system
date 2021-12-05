@@ -9,27 +9,16 @@ import { ExtractLibInfoService } from '../../services/extract-lib-info.service';
   templateUrl: './library-home.component.html',
   styleUrls: ['./library-home.component.css'],
 })
-export class LibraryHomeComponent implements OnInit, OnDestroy {
+export class LibraryHomeComponent implements OnInit {
 
   constructor(private cookieService: ExtractCookieService) {}
 
   hello: string = "Hello world";
   books: Book[] = [];
-  movedLeft = false;
   role = '';
 
   ngOnInit(): void {
     this.role = this.cookieService.getRole();
-    console.log("role: ",this.role);
-  }
-
-  toggleLeftPanel(): void {
-    if ( !this.movedLeft ) {
-      
-    }
-  }
-
-  ngOnDestroy(): void {
   }
 
 }

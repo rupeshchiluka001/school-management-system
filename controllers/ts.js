@@ -5,9 +5,7 @@ const CourseLink = require('../models/courseLink');
 const PER_PAGE = 10;
 
 exports.addNewCourse = async (req, res, next) => {
-    console.log("Adding New Course...");
     const user = req.user;
-    console.log("User",user);
     if (user == undefined) {
         res.status(401);
         res.send({"msg": "Login first!!"});
@@ -20,25 +18,23 @@ exports.addNewCourse = async (req, res, next) => {
     try {
         //we need to extract course from req.body
         course = await new Course({
-            name: req.body.courseName,
+            name: req.body.name,
             professor: req.body.professor,
             professorId: userId,
             description:req.body.description
         }).save();
         //we need to store course
-        console.log("Course: ", course);
         courseSaved = true;
 
         //we need to store each link in links
         req.body.links.forEach(async (element) => {
-            const courseLinkRecord = await new CourseLink({
+            await new CourseLink({
                 courseName: course.name,
                 courseId: course._id,
                 className: element.className,
                 classLink: element.classLink
             }).save();
 
-            console.log("Course Link Record: ", courseLinkRecord);
         });
 
         linksSaved = true;
@@ -57,9 +53,7 @@ exports.addNewCourse = async (req, res, next) => {
 }
 
 exports.getCourseListByProfessor = async (req, res, next) => {
-    console.log("Getting list...");
     const user = req.user;
-    console.log("User",user);
     if (user == undefined) {
         res.status(401);
         res.send({"msg": "Login first!!"});
@@ -90,9 +84,7 @@ exports.getCourseListByProfessor = async (req, res, next) => {
 }
 
 exports.getcourseList = async (req, res, next) => {
-    console.log("Getting courses list...");
     const user = req.user;
-    console.log("User",user);
     if (user == undefined) {
         res.status(401);
         res.send({"msg": "Login first!!"});
@@ -100,9 +92,10 @@ exports.getcourseList = async (req, res, next) => {
     }
 
     const userId = user.userId
+    console.log(req.query);
     const page = req.query.page || 1;
-    const filter = req.query.filter;
-    const value = req.query.value;
+    const filter = req.query.filter !== 'undefined' ? req.query.filter : 'name';
+    const value = req.query.value || '';
     let searchObj = {};
 
     if ( filter !== '' && value !== '' ) {
@@ -172,13 +165,11 @@ exports.updateCourse = async (req, res, next) => {
 
     const user = req.user;
     const userId = user.userId;
-    let course = req.body.course, previousCourse;
-    console.log(req.body);
+    let course = req.body, previousCourse;
     let courseUpdated = false, courseLinksUpdated = false;
 
     try {
-        previousCourse = await Course.findById(course._id);
-        console.log("Course: ", previousCourse);
+        previousCourse = await Course.findById(course.links[0]._id);
 
         await Course.findByIdAndUpdate(course._id, {
             name: course.courseName,
@@ -189,10 +180,20 @@ exports.updateCourse = async (req, res, next) => {
         courseUpdated = true;
         //we update links
         course.links.forEach(async (element) => {
-            await CourseLink.findByIdAndUpdate(element._id, {
-                className: element.className,
-                classLink: element.classLink
-            });
+            if (element._id) {
+                await CourseLink.findByIdAndUpdate(element._id, {
+                    className: element.className,
+                    classLink: element.classLink
+                });
+            }
+            else {
+                await new CourseLink({
+                    courseName: course.name,
+                    courseId: course._id,
+                    className: element.className,
+                    classLink: element.classLink
+                }).save();
+            }
         });
 
         courseLinksUpdated = true;
